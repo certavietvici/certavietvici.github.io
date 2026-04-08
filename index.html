@@ -1,24 +1,129 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CERTAVI</title>
+    <title>Certavi et Vici — Aachen LLC</title>
     <style>
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            text-align: center;
-            padding: 80px 20px;
-            background: #f8f9fa;
-            color: #333;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+        :root {
+            --accent: #b38b2e;
         }
-        h1 { font-size: 3rem; margin-bottom: 20px; }
-        p { font-size: 1.2rem; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+            background: #050505;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 760px;
+            padding: 2rem;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.2rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 0.4rem;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .meaning {
+            font-size: 1.05rem;
+            color: #777;
+            margin-bottom: 2.4rem;
+            font-style: italic;
+        }
+
+        .tagline {
+            font-size: 1.45rem;
+            margin-bottom: 2.5rem;
+            color: #cccccc;
+            font-weight: 500;
+        }
+
+        .description {
+            font-size: 1.15rem;
+            max-width: 580px;
+            margin: 0 auto 3.5rem;
+            color: #aaaaaa;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .footer {
+            margin-top: 4rem;
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .footer a {
+            color: #999;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--accent);
+        }
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 20%, rgba(179, 139, 46, 0.06) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
-    <h1>CERTAVI</h1>
-    <p></p>
+    <div class="bg"></div>
+
+    <div class="container">
+        <h1 class="logo">Certavi et Vici</h1>
+        <p class="meaning"></p>
+        
+        <p class="tagline">
+            Cybersecurity solutions
+        </p>
+
+        <p class="description">
+            
+        </p>
+
+        <div class="footer">
+            <p>Aachen LLC • Front Royal, Virginia</p>
+            <p>
+                <a href="https://certavietvici.com" target="_blank"></a><br>
+                <a href="mailto:info@certavietvici.com">info@certavietvici.com</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        console.log("%cCertavi et Vici Placeholder Page Loaded", "color:#b38b2e; font-weight:500");
+    </script>
 </body>
 </html>
