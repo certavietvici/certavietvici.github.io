@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certavi et Vici — Aachen LLC</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com" />
+
+    <!-- ✅ Correct Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
     <style>
-        @import url('https://googleapis.com');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
         :root { --accent: #b38b2e; --map-white: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body { font-family: 'Inter', sans-serif; background: #050505; color: #e0e0e0; display: flex; flex-direction: row; }
         
         #map-container { position: sticky; top: 0; width: 50%; height: 100vh; background: #000; border-right: 1px solid #222; }
@@ -24,7 +28,6 @@
         h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--map-white); }
         p { color: #aaaaaa; line-height: 1.6; }
 
-        /* Glow effects for wireframe look */
         .leaflet-tooltip { 
             background: rgba(0, 0, 0, 0.85) !important; 
             color: #fff !important; 
@@ -32,75 +35,81 @@
             font-family: monospace; 
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); 
         }
-        
-        .leaflet-marker-icon { filter: brightness(0) invert(1); } /* Makes marker white */
 
-        /* White Animated Career Path Line */
+        .leaflet-marker-icon { filter: brightness(0) invert(1); }
+
         .career-path-line {
             stroke-dasharray: 2000;
             stroke-dashoffset: 2000;
             animation: draw 8s linear forwards;
             filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
         }
+
         @keyframes draw { to { stroke-dashoffset: 0; } }
 
-        @media (max-width: 900px) { body { flex-direction: column; } #map-container, #content { width: 100%; } #map-container { height: 40vh; } }
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            #map-container, #content { width: 100%; }
+            #map-container { height: 40vh; }
+        }
     </style>
 </head>
 <body>
     <div id="map-container"><div id="map"></div></div>
+
     <div id="content">
         <div class="section active" data-lat="40" data-lng="-40" data-zoom="3">
             <h1 class="logo">Certavi et Vici</h1>
             <p class="tagline">Cybersecurity Solutions</p>
             <p>Scroll to explore the journey.</p>
         </div>
+
         <div class="section" data-lat="42.3718" data-lng="-71.1213" data-zoom="15" data-place="Harvard Kennedy School">
             <h2>1999</h2>
             <p>Harvard Kennedy School</p>
         </div>
+
         <div class="section" data-lat="42.3789" data-lng="-71.1154" data-zoom="16" data-place="McMahon Lab">
             <h2>1999-2000</h2>
             <p>Harvard University - McMahon Lab<br>16 Divinity Avenue</p>
         </div>
+
         <div class="section" data-lat="42.3601" data-lng="-71.0589" data-zoom="13" data-place="Boston Transition">
             <h2>2000-2001</h2>
-            <p>Boston Transition: Liberty Fund Services, Beacon Skanska, Bain & Co., and Boston VNA.</p>
+            <p>Boston Transition...</p>
         </div>
+
         <div class="section" data-lat="38.8998" data-lng="-77.0061" data-zoom="15" data-place="Capitol Hill">
             <h2>2001-2002</h2>
-            <p>Washington DC: ACICS & The Heritage Foundation.</p>
+            <p>Washington DC...</p>
         </div>
+
         <div class="section" data-lat="38.8831" data-lng="-77.0163" data-zoom="16" data-place="NASA HQ">
             <h2>2002-Present</h2>
             <p>NASA HQ — Code FT</p>
-            <div style="margin-top: 2rem; font-size: 0.8rem; color: #666;"> Aachen LLC • Front Royal, Virginia<br>CAGE: 1NEE8 </div>
         </div>
     </div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com"></script>
+    <!-- ✅ Correct Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
         const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([40, -40], 3);
 
-        // DARK MATTER TILES (Includes State/Country Boundaries)
-        L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap &copy; CARTO',
+        // ✅ Dark tile layer (Carto Dark Matter)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             subdomains: 'abcd',
             maxZoom: 20
         }).addTo(map);
 
         const sections = document.querySelectorAll('.section');
-        const observerOptions = { threshold: 0.5 };
         let marker;
-        
-        // Build path coordinates
+
         const coords = Array.from(sections).map(s => [
             parseFloat(s.getAttribute('data-lat')),
             parseFloat(s.getAttribute('data-lng'))
         ]);
 
-        // Draw the white animated path
         L.polyline(coords, {
             color: '#ffffff',
             weight: 2,
@@ -114,24 +123,21 @@
                     sections.forEach(s => s.classList.remove('active'));
                     entry.target.classList.add('active');
 
-                    const lat = parseFloat(entry.target.getAttribute('data-lat'));
-                    const lng = parseFloat(entry.target.getAttribute('data-lng'));
-                    const zoom = parseInt(entry.target.getAttribute('data-zoom'));
-                    const place = entry.target.getAttribute('data-place') || "Certavi et Vici";
+                    const lat = parseFloat(entry.target.dataset.lat);
+                    const lng = parseFloat(entry.target.dataset.lng);
+                    const zoom = parseInt(entry.target.dataset.zoom);
+                    const place = entry.target.dataset.place || "Certavi et Vici";
 
                     map.flyTo([lat, lng], zoom, { duration: 2.5 });
 
-                    if (marker) { map.removeLayer(marker); }
-                    
+                    if (marker) map.removeLayer(marker);
+
                     marker = L.marker([lat, lng]).addTo(map)
-                        .bindTooltip(place, { 
-                            permanent: true, 
-                            direction: 'top', 
-                            offset: [0, -10] 
-                        }).openTooltip();
+                        .bindTooltip(place, { permanent: true, direction: 'top', offset: [0, -10] })
+                        .openTooltip();
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.5 });
 
         sections.forEach(section => observer.observe(section));
     </script>
