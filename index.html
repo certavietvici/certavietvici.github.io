@@ -3,210 +3,248 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certavi et Vici — Aachen LLC</title>
+<title>Aachen LLC | Professional Profile</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
-    --hud:#00ff66;
-    --accent:#b38b2e;
-    --bg:#050505;
+    --bg: #0b0b0b;
+    --panel: #111;
+    --text: #e6e6e6;
+    --muted: #a0a0a0;
+    --accent: #caa24a;
+    --border: #222;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
-
-html, body {
-    height:100%;
-    background:var(--bg);
-    color:#e0e0e0;
-    font-family:'Inter', sans-serif;
-    overflow-y:auto;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* ================= CONTENT ================= */
-
-#content {
-    width:100%;
-    padding:0 10%;
-    padding-bottom:28vh;
+body {
+    font-family: Inter, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
 }
 
+/* =========================
+   PAGE WRAPPER
+========================= */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px 120px;
+}
+
+/* =========================
+   HEADER / BLUF
+========================= */
+h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 18px;
+}
+
+.bluf {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 18px;
+    margin-bottom: 30px;
+}
+
+.bluf strong {
+    color: var(--accent);
+}
+
+/* =========================
+   SECTIONS
+========================= */
 .section {
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    opacity:0.35;
-    transition:opacity 0.35s ease;
+    margin-bottom: 34px;
 }
 
-.section.active { opacity:1; }
-
-.logo {
-    font-family:'Playfair Display', serif;
-    font-size:3rem;
-    color:#fff;
-    margin-bottom:0.8rem;
+.section h2 {
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
 }
 
-.tagline {
-    color:var(--accent);
-    font-weight:600;
-    margin-bottom:1.2rem;
+.item {
+    margin-bottom: 14px;
 }
 
-.header-meta {
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    color:#aaa;
-    margin-bottom:1.5rem;
+.meta {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
 }
 
-/* ================= MAP ================= */
-
-#map-container {
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    height:22vh;
-    background:#000;
-    border-top:1px solid #222;
-    overflow:hidden;
+/* =========================
+   FOOTER
+========================= */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #0a0a0a;
+    border-top: 1px solid var(--border);
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    color: var(--muted);
 }
 
-/* fallback so it NEVER looks broken */
-#map-container::before {
-    content:"";
-    position:absolute;
-    inset:0;
-    background:radial-gradient(circle at center, rgba(0,255,102,0.08), transparent 60%);
+footer span {
+    margin-right: 18px;
 }
 
-#hud-label {
-    position:absolute;
-    top:8px;
-    left:12px;
-    z-index:10;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    color:var(--hud);
-    background:rgba(0,0,0,0.75);
-    border:1px solid var(--hud);
-    padding:4px 8px;
+/* =========================
+   LINKS
+========================= */
+a {
+    color: var(--accent);
+    text-decoration: none;
 }
 
-/* ================= MAP IMAGES ================= */
-
-.map-image {
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    opacity:0;
-    transition:opacity 0.4s ease;
-    filter:grayscale(1) contrast(1.25) brightness(0.65);
-    transform:scale(1.02);
-}
-
-.map-image.active { opacity:1; }
-
-@media (max-width:900px) {
-    #map-container { height:28vh; }
+a:hover {
+    text-decoration: underline;
 }
 </style>
 </head>
 
 <body>
 
-<div id="content">
+<div class="container">
 
-    <div class="section active" data-map="front_royal">
-        <h1 class="logo">Certavi et Vici</h1>
+    <!-- =========================
+         HEADER / IDENTITY
+    ========================== -->
+    <h1>[[ YOUR NAME / AACHEN LLC ]]</h1>
 
-        <p class="tagline">Cybersecurity Operations</p>
+    <div class="subtitle">
+        Cybersecurity • Enterprise Architecture • IC / DoW Support
+    </div>
 
-        <div class="header-meta">
-            Aachen LLC<br>
-            CAGE: 1NEE8<br>
-            info@certavietvici.com
+    <!-- =========================
+         BLUF
+    ========================== -->
+    <div class="bluf">
+        <strong>BLUF:</strong>
+        [[ 2–4 sentence executive summary: cleared cybersecurity and enterprise architecture professional supporting IC and DoW environments across CCMD, MAJCOM, and deployed operations. ]]
+    </div>
+
+    <!-- =========================
+         IDENTITY / CONTRACT PROFILE
+    ========================== -->
+    <div class="section">
+        <h2>Contracting Profile</h2>
+
+        <div class="item meta">
+            CAGE: [[ CAGE CODE ]]<br>
+            UEI (SAM.gov): [[ UEI ]]<br>
+            EIN: [[ EIN ]]<br>
+            DUNS (legacy): [[ DUNS ]]<br>
+            NAICS: [[ NAICS CODES ]]<br>
+            State Entity #: [[ STATE REGISTRATION ]]
         </div>
 
-        <p>Scroll to navigate operational history.</p>
+        <div class="item meta">
+            Email: [[ email ]]<br>
+            Clearance: [[ TS/SCI / Poly / etc. ]]
+        </div>
     </div>
 
-    <div class="section" data-map="harvard">
-        <h2>1999</h2>
-        <p>KSG Institute of Politics & Harvard McMahon Lab — Cambridge, MA</p>
+    <!-- =========================
+         CERTIFICATIONS
+    ========================== -->
+    <div class="section">
+        <h2>Certifications</h2>
+
+        <div class="item">
+            CISSP — (ISC)² — [[ endorsement / status pending ]]
+        </div>
+
+        <div class="item">
+            TOGAF 10 Enterprise Architecture Practitioner
+        </div>
+
+        <div class="item">
+            VMware VCP-DCV
+        </div>
+
+        <div class="item meta">
+            DoW 8140 compliant certifications (primary alignment)<br>
+            DoW 8570 legacy alignment (secondary / transitional mapping)
+        </div>
     </div>
 
-    <div class="section" data-map="nasa">
-        <h2>2001–2003</h2>
-        <p>NASA Code FT Engineering Training — Washington, DC</p>
+    <!-- =========================
+         EXPERIENCE SUMMARY
+    ========================== -->
+    <div class="section">
+        <h2>Operational Experience</h2>
+
+        <div class="item">
+            [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
+            <span class="meta">[[ impact statement ]]</span>
+        </div>
+
+        <div class="item">
+            [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
+            <span class="meta">[[ impact statement ]]</span>
+        </div>
+
+        <div class="item">
+            [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
+            <span class="meta">[[ impact statement ]]</span>
+        </div>
     </div>
 
-    <div class="section" data-map="itt">
-        <h2>2011–2012</h2>
-        <p>(ITT) Ft Benning CRC → Kuwait → BAF → Ghazni</p>
+    <!-- =========================
+         DOMAINS
+    ========================== -->
+    <div class="section">
+        <h2>Technical Domains</h2>
+
+        <div class="item">
+            Active Directory / Enterprise Identity (CCMD / MAJCOM scale)
+        </div>
+
+        <div class="item">
+            Cybersecurity Architecture & Operations (IC / DoW environments)
+        </div>
+
+        <div class="item">
+            Enterprise Infrastructure (VMware / hybrid cloud)
+        </div>
+
+        <div class="item">
+            Intelligence & ISR Systems (US BICES, deployed environments)
+        </div>
     </div>
 
 </div>
 
-<div id="map-container">
-    <div id="hud-label">MAP DISPLAY // STATIC SNAPSHOT MODE</div>
-
-    <!-- FRONT ROYAL -->
-    <img class="map-image active"
-        id="front_royal"
-        src="https://staticmap.openstreetmap.fr/osmfr/staticmap.php?center=38.9180,-78.1947&zoom=8&size=1200x300&markers=38.9180,-78.1947,green">
-
-    <!-- HARVARD -->
-    <img class="map-image"
-        id="harvard"
-        src="https://staticmap.openstreetmap.fr/osmfr/staticmap.php?center=42.3732,-71.1167&zoom=12&size=1200x300&markers=42.3732,-71.1167,green">
-
-    <!-- NASA -->
-    <img class="map-image"
-        id="nasa"
-        src="https://staticmap.openstreetmap.fr/osmfr/staticmap.php?center=38.8831,-77.0163&zoom=11&size=1200x300&markers=38.8831,-77.0163,green">
-
-    <!-- ITT MULTI -->
-    <img class="map-image"
-        id="itt"
-        src="https://staticmap.openstreetmap.fr/osmfr/staticmap.php?center=45,55&zoom=2&size=1200x300&markers=
-32.3617,-84.9493,green|
-29.3759,47.9774,green|
-34.9462,69.2646,green|
-33.5560,68.4200,green">
-</div>
-
-<script>
-const sections = document.querySelectorAll('.section');
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-
-        sections.forEach(s => s.classList.remove('active'));
-        entry.target.classList.add('active');
-
-        const id = entry.target.dataset.map;
-        if (!id) return;
-
-        document.querySelectorAll('.map-image').forEach(img => {
-            img.classList.remove('active');
-        });
-
-        const active = document.getElementById(id);
-        if (active) active.classList.add('active');
-    });
-}, { threshold: 0.6 });
-
-sections.forEach(s => observer.observe(s));
-</script>
+<!-- =========================
+     FOOTER
+========================= -->
+<footer>
+    <span>Aachen LLC</span>
+    <span>[[ email ]]</span>
+    <span>[[ phone ]]</span>
+    <span>© [[ YEAR ]]</span>
+</footer>
 
 </body>
 </html>
