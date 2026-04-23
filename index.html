@@ -11,7 +11,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
 
-:root { --accent: #b38b2e; --hud: #00ff66; }
+:root { --hud: #00ff66; --accent: #b38b2e; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -25,12 +25,12 @@ html, body {
 }
 
 /* =========================
-   CONTENT
+   CONTENT (FIXED SCROLL HEIGHT)
 ========================= */
 #content {
     width: 100%;
     padding: 0 10%;
-    padding-bottom: 45vh; /* IMPORTANT: space for bottom map */
+    padding-bottom: 50vh; /* room for HUD map */
 }
 
 .section {
@@ -94,7 +94,7 @@ p { color: #aaa; }
 }
 
 /* =========================
-   BOTTOM MAP HUD
+   BOTTOM HUD MAP
 ========================= */
 #map-container {
     position: fixed;
@@ -112,7 +112,6 @@ p { color: #aaa; }
     height: 100%;
 }
 
-/* responsive */
 @media (max-width: 900px) {
     #map-container { height: 40vh; }
 }
@@ -168,6 +167,25 @@ const roles = [
 ];
 
 /* =========================
+   BUILD SCROLL SECTIONS (FIX)
+========================= */
+const content = document.getElementById('content');
+
+roles.forEach(role => {
+    const div = document.createElement('div');
+    div.className = 'section';
+    div.dataset.role = role.title;
+
+    div.innerHTML = `
+        <h2>${role.year}</h2>
+        <p><strong>${role.title}</strong></p>
+        <p>${role.locations.map(l => l.label).join(' → ')}</p>
+    `;
+
+    content.appendChild(div);
+});
+
+/* =========================
    MAP INIT
 ========================= */
 const map = L.map('map', {
@@ -180,7 +198,6 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 20
 }).addTo(map);
 
-/* start */
 map.setView([roles[0].locations[0].lat, roles[0].locations[0].lng], 6);
 
 /* =========================
@@ -209,7 +226,7 @@ function createArc(start, end) {
 }
 
 /* =========================
-   SCROLL LOGIC
+   SCROLL OBSERVER
 ========================= */
 const sections = document.querySelectorAll('.section');
 let markers = [];
@@ -249,14 +266,12 @@ const observer = new IntersectionObserver((entries) => {
 
         for (let i = 0; i < coords.length - 1; i++) {
             const arc = createArc(coords[i], coords[i + 1]);
-
             const line = L.polyline(arc, {
                 color: '#00ff66',
                 weight: 1,
                 opacity: 0.35,
                 dashArray: '3,6'
             }).addTo(map);
-
             lines.push(line);
         }
     });
