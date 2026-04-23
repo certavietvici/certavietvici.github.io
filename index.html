@@ -3,121 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aachen LLC | Professional Profile</title>
+<title>Aachen LLC | Technical Resume</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap');
-
-/* =========================
-   PURE B/W THEME
-========================= */
-:root {
-    --bg: #ffffff;
-    --text: #111111;
-    --muted: #555555;
-    --border: #e6e6e6;
-    --panel: #f7f7f7;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: Inter, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+    color: #111;
+    line-height: 1.5;
 }
 
-/* =========================
-   LAYOUT
-========================= */
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 60px 24px 120px;
+    padding: 40px 24px 80px 24px;
 }
 
-/* =========================
-   HEADER
-========================= */
-h1 {
-    font-size: 2.2rem;
-    font-weight: 600;
+/* TOP INFO BLOCKS */
+.top-block {
+    border-bottom: 1px solid #111;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
     margin-bottom: 6px;
 }
 
-.subtitle {
-    color: var(--text);
-    font-weight: 500;
-    margin-bottom: 18px;
-}
-
-/* =========================
-   BLUF
-========================= */
+/* BLUF */
 .bluf {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    padding: 18px;
+    border-bottom: 2px solid #111;
+    padding-bottom: 20px;
     margin-bottom: 30px;
 }
 
-.bluf strong {
-    font-weight: 700;
-}
-
-/* =========================
-   SECTIONS
-========================= */
-.section {
-    margin-bottom: 34px;
-}
-
-.section h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
+.bluf h1 {
+    font-size: 28px;
     margin-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 6px;
-}
-
-.item {
-    margin-bottom: 14px;
 }
 
 .meta {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.85rem;
-    color: var(--muted);
+    font-size: 13px;
+    color: #333;
 }
 
-/* =========================
-   FOOTER (BLACK BAR)
-========================= */
-footer {
+/* SECTIONS */
+.section {
+    margin-bottom: 28px;
+}
+
+.section h2 {
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 800px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* FOOTER */
+.footer {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
-    background: #000000;
-    color: #ffffff;
-    border-top: 1px solid #222;
+    right: 0;
+    background: #000;
+    color: #fff;
+    font-size: 12px;
     padding: 10px 20px;
-    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
 }
 
-footer span {
-    margin-right: 18px;
-}
-
-/* LINKS (neutral grayscale) */
-a {
-    color: #000;
-    text-decoration: underline;
+.footer a {
+    color: #fff;
+    text-decoration: none;
 }
 </style>
 </head>
@@ -126,87 +102,118 @@ a {
 
 <div class="container">
 
-    <!-- HEADER -->
-    <h1>[[ YOUR NAME / AACHEN LLC ]]</h1>
+    <!-- ================= ENTITY / LEGAL ================= -->
+    <div class="top-block">
+        <div class="title">Aachen LLC — Entity Overview</div>
+        <div style="font-size:13px; color:#333;">
+            Single-Member LLC (Owner-Operated)<br>
+            Registered U.S. Entity (SAM.gov active profile)<br><br>
 
-    <div class="subtitle">
-        Cybersecurity • Enterprise Architecture • IC / DoW Support
+            DBAs:<br>
+            • Palatine Partners<br>
+            • Aachen Arms<br>
+            • Certavi et Vici
+        </div>
     </div>
 
-    <!-- BLUF -->
+    <!-- ================= BLUF ================= -->
     <div class="bluf">
-        <strong>BLUF:</strong>
-        [[ Clear 2–4 sentence summary of cleared IC / DoW enterprise cybersecurity and architecture experience across CCMD, MAJCOM, and deployed environments. ]]
+        <h1>[FULL NAME / AACHEN LLC]</h1>
+
+        <div class="meta">
+            TS/SCI (or equivalent) | Dual Citizen | OCONUS Experience: [X] Years<br>
+            ARCNet Eligible | DoW Cyber Workforce 8140 Primary | 8570 Secondary
+        </div>
+
+        <p>
+            BLUF: Senior cybersecurity, enterprise architecture, and infrastructure
+            professional supporting DoW and Intelligence Community environments.
+            Experience spans CCMD/MAJCOM-level operations, enterprise identity systems,
+            and classified network infrastructure across CONUS and OCONUS deployments.
+        </p>
     </div>
 
-    <!-- CONTRACT PROFILE -->
+    <!-- ================= CORE ================= -->
     <div class="section">
-        <h2>Contracting Profile</h2>
+        <h2>Core Competencies</h2>
 
-        <div class="item meta">
-            CAGE: [[ CAGE ]]<br>
-            UEI (SAM.gov): [[ UEI ]]<br>
-            EIN: [[ EIN ]]<br>
-            DUNS (legacy): [[ DUNS ]]<br>
-            NAICS: [[ NAICS ]]<br>
-            State Entity #: [[ VA ENTITY ]]
-        </div>
+        <div class="grid">
+            <div>
+                <ul>
+                    <li>Enterprise Active Directory / Identity Systems</li>
+                    <li>CCMD / MAJCOM infrastructure operations</li>
+                    <li>DoW / IC enclave environments</li>
+                    <li>Large-scale systems administration</li>
+                </ul>
+            </div>
 
-        <div class="item meta">
-            Email: [[ EMAIL ]]<br>
-            Clearance: [[ TS/SCI / CI Poly / etc. ]]
+            <div>
+                <ul>
+                    <li>Enterprise Architecture (TOGAF 10 Practitioner)</li>
+                    <li>VMware / Virtualization (VCP-DCV)</li>
+                    <li>Cybersecurity operations & governance</li>
+                    <li>IC / ISR platform support (US BICES, airborne ISR)</li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <!-- CERTIFICATIONS -->
+    <!-- ================= CERTS ================= -->
     <div class="section">
-        <h2>Certifications</h2>
+        <h2>Certifications & Framework Alignment</h2>
 
-        <div class="item">CISSP — (ISC)²</div>
-        <div class="item">TOGAF 10 Enterprise Architecture Practitioner</div>
-        <div class="item">VMware VCP-DCV</div>
+        <p>
+            ISC2 CISSP (in process / endorsement pending)<br>
+            VMware VCP-DCV<br>
+            TOGAF 10 Enterprise Architecture Practitioner<br><br>
 
-        <div class="item meta">
-            DoW 8140 alignment (primary)<br>
-            DoW 8570 legacy mapping (secondary)
-        </div>
+            DoW 8140 Workforce Framework — Primary Alignment<br>
+            DoW 8570 — Secondary Legacy Alignment
+        </p>
     </div>
 
-    <!-- EXPERIENCE -->
+    <!-- ================= EXPERIENCE ================= -->
     <div class="section">
         <h2>Operational Experience</h2>
 
-        <div class="item">
-            [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
-            <span class="meta">[[ impact statement ]]</span>
-        </div>
+        <p>
+            <strong>DoW / IC / Coalition Environments</strong><br><br>
 
-        <div class="item">
-            [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
-            <span class="meta">[[ impact statement ]]</span>
-        </div>
+            • CCMD-Level: CENTCOM, EUCOM, AFRICOM infrastructure support<br>
+            • HQDA Enterprise Architecture Team (Pentagon)<br>
+            • US BICES / IC-aligned systems support<br>
+            • TF ODIN-E aligned programs: SATURN ARCH, MARRS, VADER, E-MARRS<br><br>
 
+            <strong>Deployments:</strong><br>
+            • Afghanistan (multiple rotations: 2011–2019)<br>
+            • Germany / EUCOM (2014–2018, 2022–2025)<br>
+            • Qatar F-15QA Cyber Operations (2021–2022)<br>
+            • West Africa Ebola Response Support (2014)
+        </p>
     </div>
 
-    <!-- DOMAINS -->
+    <!-- ================= ADDITIONAL ================= -->
     <div class="section">
-        <h2>Technical Domains</h2>
+        <h2>Additional Qualifications</h2>
 
-        <div class="item">Enterprise Identity (CCMD / MAJCOM AD environments)</div>
-        <div class="item">Cybersecurity Architecture & Operations (IC / DoW)</div>
-        <div class="item">Enterprise Infrastructure (VMware / hybrid environments)</div>
-        <div class="item">Intelligence / ISR Systems (US BICES, deployed systems)</div>
+        <p>
+            Range Safety Officer certified<br>
+            M4 / M9 qualified<br>
+            Jagdschein (Germany hunting license)<br><br>
+
+            Additional details available upon request for cleared government / prime contractors.
+        </p>
     </div>
 
 </div>
 
-<!-- FOOTER -->
-<footer>
-    <span>Aachen LLC</span>
-    <span>[[ EMAIL ]]</span>
-    <span>[[ PHONE ]]</span>
-    <span>© [[ YEAR ]]</span>
-</footer>
+<!-- ================= FOOTER ================= -->
+<div class="footer">
+    <div>Aachen LLC | CAGE: [XXXXX] | UEI: [XXXXX]</div>
+    <div>
+        <a href="mailto:info@certavietvici.com">info@certavietvici.com</a>
+    </div>
+</div>
 
 </body>
 </html>
