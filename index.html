@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certavi et Vici — Aachen LLC</title>
     
-    <!-- FIX 1: Full Path to Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com" />
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
@@ -53,41 +53,54 @@
         <div class="section" data-lat="38.8831" data-lng="-77.0163" data-zoom="16">
             <h2>2002-Present</h2>
             <p>NASA HQ — Code FT</p>
-            <div style="margin-top: 2rem; font-size: 0.8rem; color: #666;"> Aachen LLC • Front Royal, Virginia<br>CAGE: 1NEE8 </div>
+            <div style="margin-top: 2rem; font-size: 0.8rem; color: #666;">
+                Aachen LLC • Front Royal, Virginia<br>CAGE: 1NEE8
+            </div>
         </div>
     </div>
 
-    <!-- FIX 2: Full Path to Leaflet JS -->
-    <!-- 1. Load the actual Library -->
-    <script src="https://unpkg.com"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <!-- 2. Then run your map code -->
     <script>
-    const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([40, -40], 3);
+        const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([40, -40], 3);
 
-        // FIX 3: Working Wireframe Tile Layer
-        L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
-            subdomains: 'abcd',
-            maxZoom: 20
+        // Working tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
         }).addTo(map);
 
         const sections = document.querySelectorAll('.section');
         const observerOptions = { threshold: 0.5 };
+
+        let marker;
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     sections.forEach(s => s.classList.remove('active'));
                     entry.target.classList.add('active');
-                    const lat = entry.target.getAttribute('data-lat');
-                    const lng = entry.target.getAttribute('data-lng');
-                    const zoom = entry.target.getAttribute('data-zoom');
+
+                    const lat = parseFloat(entry.target.getAttribute('data-lat'));
+                    const lng = parseFloat(entry.target.getAttribute('data-lng'));
+                    const zoom = parseInt(entry.target.getAttribute('data-zoom'));
+
                     map.flyTo([lat, lng], zoom, { duration: 2 });
-                    L.marker([lat, lng]).addTo(map)
-                        .bindTooltip(entry.target.querySelector('h2')?.innerText || "Certavi et Vici", { permanent: true })
+
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+
+                    marker = L.marker([lat, lng]).addTo(map)
+                        .bindTooltip(
+                            entry.target.querySelector('h2')?.innerText || "Certavi et Vici",
+                            { permanent: true }
+                        )
                         .openTooltip();
                 }
             });
         }, observerOptions);
+
         sections.forEach(section => observer.observe(section));
     </script>
 </body>
