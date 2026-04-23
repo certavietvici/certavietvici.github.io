@@ -11,14 +11,11 @@
 
 :root {
     --hud: #00ff66;
+    --accent: #b38b2e;
     --bg: #050505;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
 
 html, body {
     height: 100%;
@@ -28,9 +25,7 @@ html, body {
     overflow-y: auto;
 }
 
-/* =========================
-   MAIN CONTENT
-========================= */
+/* ========================= CONTENT ========================= */
 #content {
     width: 100%;
     padding: 0 10%;
@@ -39,42 +34,37 @@ html, body {
 
 .section {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    opacity: 0.35;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    opacity:0.4;
     transition: opacity 0.4s ease;
 }
 
-.section.active {
-    opacity: 1;
-}
+.section.active { opacity:1; }
 
 .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    color: #fff;
-    margin-bottom: 0.8rem;
+    font-family:'Playfair Display', serif;
+    font-size:3rem;
+    color:#fff;
+    margin-bottom:0.8rem;
 }
 
+/* FIX: restore non-green tagline */
 .tagline {
-    color: var(--hud);
-    font-weight: 600;
-    margin-bottom: 1.5rem;
+    color: var(--accent);
+    font-weight:600;
+    margin-bottom:1.5rem;
 }
 
-/* ✅ FIXED HEADER META BLOCK */
 .header-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: #aaa;
-    margin-bottom: 2rem;
-    line-height: 1.5;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:#aaa;
+    margin-bottom:2rem;
 }
 
-/* =========================
-   MAP HUD
-========================= */
+/* ========================= MAP HUD ========================= */
 #map-container {
     position: fixed;
     bottom: 0;
@@ -86,43 +76,53 @@ html, body {
     overflow: hidden;
 }
 
-#map-frame {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-/* FULL IMAGE FIX */
-.map-image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-
-    /* HUD look */
-    filter: grayscale(1) contrast(1.2) brightness(0.65);
-}
-
-.map-image.active {
-    opacity: 1;
-}
-
-/* HUD label */
 #hud-label {
-    position: absolute;
-    top: 8px;
-    left: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    position:absolute;
+    top:8px;
+    left:12px;
+    z-index:10;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
     color: var(--hud);
-    background: rgba(0,0,0,0.75);
-    padding: 4px 8px;
-    border: 1px solid var(--hud);
-    z-index: 10;
+    background: rgba(0,0,0,0.7);
+    border:1px solid var(--hud);
+    padding:4px 8px;
 }
+
+/* ========================= MAP IMAGES ========================= */
+.map-image {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition: opacity 0.5s ease;
+    filter: grayscale(1) contrast(1.2) brightness(0.65);
+    background: #111;
+}
+
+.map-image.active { opacity:1; }
+
+/* fallback text if image fails */
+.map-image::after {
+    content: "MAP TILE UNAVAILABLE";
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--hud);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    opacity:0;
+}
+
+.map-image:not([src]),
+.map-image[src=""] {
+    opacity:1;
+}
+
 </style>
 </head>
 
@@ -130,13 +130,11 @@ html, body {
 
 <div id="content">
 
-    <!-- HERO -->
     <div class="section active" data-map="front_royal">
         <h1 class="logo">Certavi et Vici</h1>
 
         <p class="tagline">Cybersecurity Operations</p>
 
-        <!-- FIXED POSITIONING -->
         <div class="header-meta">
             Aachen LLC<br>
             CAGE: 1NEE8<br>
@@ -163,30 +161,25 @@ html, body {
 
 </div>
 
-<!-- MAP FRAME -->
 <div id="map-container">
     <div id="hud-label">MAP DISPLAY // STATIC SNAPSHOT MODE</div>
 
-    <div id="map-frame">
+    <!-- FRONT ROYAL -->
+    <img class="map-image active" id="front_royal"
+        src="https://api.maptiler.com/maps/streets/static/78.1947,-38.9180,6/1200x300.png?key=get_your_own_key">
 
-        <!-- Front Royal (default anchor) -->
-        <img class="map-image active" id="front_royal"
-            src="https://staticmap.openstreetmap.de/staticmap.php?center=38.9180,-78.1947&zoom=7&size=1200x300&markers=38.9180,-78.1947,green">
+    <!-- HARVARD -->
+    <img class="map-image" id="harvard"
+        src="https://api.maptiler.com/maps/streets/static/-71.1167,42.3732,11/1200x300.png?key=get_your_own_key">
 
-        <!-- Harvard -->
-        <img class="map-image" id="harvard"
-            src="https://staticmap.openstreetmap.de/staticmap.php?center=42.3732,-71.1167&zoom=11&size=1200x300&markers=42.3732,-71.1167,green">
+    <!-- NASA -->
+    <img class="map-image" id="nasa"
+        src="https://api.maptiler.com/maps/streets/static/-77.0163,38.8831,10/1200x300.png?key=get_your_own_key">
 
-        <!-- NASA -->
-        <img class="map-image" id="nasa"
-            src="https://staticmap.openstreetmap.de/staticmap.php?center=38.8831,-77.0163&zoom=10&size=1200x300&markers=38.8831,-77.0163,green">
+    <!-- ITT MULTI -->
+    <img class="map-image" id="itt"
+        src="https://api.maptiler.com/maps/streets/static/55,33.5,3/1200x300.png?key=get_your_own_key">
 
-        <!-- ITT multi-point -->
-        <img class="map-image" id="itt"
-            src="https://staticmap.openstreetmap.de/staticmap.php?center=33.5,55&zoom=3&size=1200x300
-&markers=32.3617,-84.9493,green|29.3759,47.9774,green|34.9462,69.2646,green|33.5560,68.4200,green">
-
-    </div>
 </div>
 
 <script>
@@ -199,14 +192,14 @@ const observer = new IntersectionObserver((entries) => {
         sections.forEach(s => s.classList.remove('active'));
         entry.target.classList.add('active');
 
-        const mapId = entry.target.dataset.map;
-        if (!mapId) return;
+        const id = entry.target.dataset.map;
+        if (!id) return;
 
         document.querySelectorAll('.map-image').forEach(img => {
             img.classList.remove('active');
         });
 
-        const active = document.getElementById(mapId);
+        const active = document.getElementById(id);
         if (active) active.classList.add('active');
     });
 }, { threshold: 0.6 });
