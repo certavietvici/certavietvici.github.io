@@ -4,25 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certavi et Vici — Aachen LLC</title>
-    
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
         :root { --accent: #b38b2e; --map-blue: #00d4ff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #050505; color: #e0e0e0; display: flex; flex-direction: row; }
+        
         #map-container { position: sticky; top: 0; width: 50%; height: 100vh; background: #000; border-right: 1px solid #222; }
-        #map { width: 100%; height: 100%; }
+        #map { width: 100%; height: 100%; background: #000; }
         #content { width: 50%; padding: 0 10%; }
+
         .section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.3; transition: opacity 0.5s ease; }
         .section.active { opacity: 1; }
+
         .logo { font-family: 'Playfair Display', serif; font-size: 3rem; color: #fff; margin-bottom: 1rem; }
         .tagline { color: var(--accent); font-weight: 600; font-size: 1.2rem; margin-bottom: 2rem; }
         h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--map-blue); }
         p { color: #aaaaaa; line-height: 1.6; }
-        .leaflet-tooltip { background: rgba(0, 0, 0, 0.8) !important; color: var(--map-blue) !important; border: 1px solid var(--map-blue) !important; font-family: monospace; box-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
+
+        /* Glow effects for wireframe look */
+        .leaflet-tooltip { 
+            background: rgba(0, 0, 0, 0.8) !important; 
+            color: var(--map-blue) !important; 
+            border: 1px solid var(--map-blue) !important; 
+            font-family: monospace; 
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4); 
+        }
+        
+        .leaflet-marker-icon { filter: drop-shadow(0 0 5px var(--map-blue)); }
+
+        /* Animated Career Path Line */
+        .career-path-line {
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: draw 8s linear forwards;
+            filter: drop-shadow(0 0 5px var(--map-blue));
+        }
+        @keyframes draw { to { stroke-dashoffset: 0; } }
+
         @media (max-width: 900px) { body { flex-direction: column; } #map-container, #content { width: 100%; } #map-container { height: 40vh; } }
     </style>
 </head>
@@ -53,27 +74,40 @@
         <div class="section" data-lat="38.8831" data-lng="-77.0163" data-zoom="16">
             <h2>2002-Present</h2>
             <p>NASA HQ — Code FT</p>
-            <div style="margin-top: 2rem; font-size: 0.8rem; color: #666;">
-                Aachen LLC • Front Royal, Virginia<br>CAGE: 1NEE8
-            </div>
+            <div style="margin-top: 2rem; font-size: 0.8rem; color: #666;"> Aachen LLC • Front Royal, Virginia<br>CAGE: 1NEE8 </div>
         </div>
     </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <script>
         const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([40, -40], 3);
 
-        // Working tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19
+        // DARK WIREFRAME TILES (No Labels)
+        L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO',
+            subdomains: 'abcd',
+            maxZoom: 20
         }).addTo(map);
 
         const sections = document.querySelectorAll('.section');
         const observerOptions = { threshold: 0.5 };
-
         let marker;
+        let pathLine;
+        
+        // Collect all coordinates to draw the path
+        const coords = Array.from(sections).map(s => [
+            parseFloat(s.getAttribute('data-lat')),
+            parseFloat(s.getAttribute('data-lng'))
+        ]);
+
+        // Draw the full animated career path
+        pathLine = L.polyline(coords, {
+            color: '#00d4ff',
+            weight: 2,
+            opacity: 0.6,
+            className: 'career-path-line'
+        }).addTo(map);
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -85,18 +119,15 @@
                     const lng = parseFloat(entry.target.getAttribute('data-lng'));
                     const zoom = parseInt(entry.target.getAttribute('data-zoom'));
 
-                    map.flyTo([lat, lng], zoom, { duration: 2 });
+                    map.flyTo([lat, lng], zoom, { duration: 2, easeLinearity: 0.25 });
 
-                    if (marker) {
-                        map.removeLayer(marker);
-                    }
-
+                    if (marker) { map.removeLayer(marker); }
+                    
                     marker = L.marker([lat, lng]).addTo(map)
                         .bindTooltip(
-                            entry.target.querySelector('h2')?.innerText || "Certavi et Vici",
-                            { permanent: true }
-                        )
-                        .openTooltip();
+                            entry.target.querySelector('h2')?.innerText || "Certavi et Vici", 
+                            { permanent: true, direction: 'top', offset: [0, -10] }
+                        ).openTooltip();
                 }
             });
         }, observerOptions);
