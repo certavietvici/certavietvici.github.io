@@ -19,22 +19,14 @@ body {
     font-family: 'Inter', sans-serif;
     background: #050505;
     color: #e0e0e0;
-    display: flex;
 }
 
-#map-container {
-    position: sticky;
-    top: 0;
-    width: 35%;
-    height: 100vh;
-    border-right: 1px solid #222;
-}
-
-#map { width: 100%; height: 100%; }
-
+/* =========================
+   CONTENT
+========================= */
 #content {
-    width: 65%;
-    padding: 0 8%;
+    width: 100%;
+    padding: 0 10%;
 }
 
 .section {
@@ -44,6 +36,7 @@ body {
     justify-content: center;
     opacity: 0.3;
     transition: opacity 0.5s ease;
+    padding-bottom: 42vh; /* prevents map overlap */
 }
 
 .section.active { opacity: 1; }
@@ -64,9 +57,9 @@ body {
 h2 { color: #fff; margin-bottom: 0.5rem; }
 p { color: #aaa; }
 
-/* =========================================================
-   🟢 HUD TOOLTIP (WAR GAMES STYLE)
-   ========================================================= */
+/* =========================
+   🧠 HUD TOOLTIP (GREEN TERMINAL)
+========================= */
 .leaflet-tooltip {
     background: rgba(0, 0, 0, 0.92) !important;
     color: var(--hud) !important;
@@ -79,24 +72,15 @@ p { color: #aaa; }
     text-shadow: 0 0 4px rgba(0,255,102,0.4);
 }
 
-/* =========================================================
-   🟢 SMALL GREEN DOT MARKERS
-   ========================================================= */
-.custom-dot {
-    background: transparent;
-    border: none;
-}
-
+/* =========================
+   🟢 GREEN DOT MARKERS
+========================= */
 .custom-dot div {
     width: 7px;
     height: 7px;
     background: var(--hud);
     border-radius: 50%;
     box-shadow: 0 0 8px rgba(0,255,102,0.6);
-}
-
-/* subtle pulse */
-.custom-dot div {
     animation: pulse 2.5s infinite;
 }
 
@@ -106,17 +90,33 @@ p { color: #aaa; }
     100% { box-shadow: 0 0 4px rgba(0,255,102,0.3); }
 }
 
+/* =========================
+   🛰 MAP HUD (BOTTOM FRAME)
+========================= */
+#map-container {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 38vh;
+    background: rgba(0,0,0,0.95);
+    border-top: 1px solid #222;
+    z-index: 9999;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* responsive */
 @media (max-width: 900px) {
-    body { flex-direction: column; }
-    #map-container, #content { width: 100%; }
     #map-container { height: 40vh; }
 }
 </style>
 </head>
 
 <body>
-
-<div id="map-container"><div id="map"></div></div>
 
 <div id="content">
     <div class="section active">
@@ -126,14 +126,17 @@ p { color: #aaa; }
     </div>
 </div>
 
+<div id="map-container">
+    <div id="map"></div>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-/* =========================================================
-   ROLE DATA
-   ========================================================= */
-
+/* =========================
+   DATA
+========================= */
 const roles = [
     {
         year: "1999",
@@ -161,29 +164,9 @@ const roles = [
     }
 ];
 
-/* =========================================================
-   BUILD CONTENT
-   ========================================================= */
-
-const content = document.getElementById('content');
-
-roles.forEach(role => {
-    const div = document.createElement('div');
-    div.className = 'section';
-    div.dataset.role = role.title;
-
-    div.innerHTML = `
-        <h2>${role.year}</h2>
-        <p><strong>${role.title}</strong></p>
-    `;
-
-    content.appendChild(div);
-});
-
-/* =========================================================
+/* =========================
    MAP INIT
-   ========================================================= */
-
+========================= */
 const map = L.map('map', {
     zoomControl: false,
     attributionControl: false
@@ -195,23 +178,20 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 }).addTo(map);
 
 /* start */
-const first = roles[0].locations[0];
-map.setView([first.lat, first.lng], 6);
+map.setView([roles[0].locations[0].lat, roles[0].locations[0].lng], 5);
 
-/* =========================================================
+/* =========================
    ICON
-   ========================================================= */
-
+========================= */
 const greenDot = L.divIcon({
     className: 'custom-dot',
     html: '<div></div>',
     iconSize: [8, 8]
 });
 
-/* =========================================================
-   ARC FUNCTION
-   ========================================================= */
-
+/* =========================
+   ARC
+========================= */
 function createArc(start, end) {
     const points = [];
     const offset = 10;
@@ -225,10 +205,9 @@ function createArc(start, end) {
     return points;
 }
 
-/* =========================================================
+/* =========================
    SCROLL LOGIC
-   ========================================================= */
-
+========================= */
 const sections = document.querySelectorAll('.section');
 let markers = [];
 let lines = [];
@@ -253,10 +232,10 @@ const observer = new IntersectionObserver((entries) => {
         if (coords.length > 1) {
             map.fitBounds(L.latLngBounds(coords), {
                 padding: [80, 80],
-                maxZoom: 7
+                maxZoom: 6
             });
         } else {
-            map.flyTo(coords[0], 10, { duration: 2 });
+            map.flyTo(coords[0], 8, { duration: 2 });
         }
 
         role.locations.forEach(loc => {
@@ -264,7 +243,7 @@ const observer = new IntersectionObserver((entries) => {
 
             m.bindTooltip(loc.label, {
                 direction: 'top',
-                permanent: false   // IMPORTANT: no overlap anymore
+                permanent: false
             });
 
             markers.push(m);
