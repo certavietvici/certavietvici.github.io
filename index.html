@@ -8,15 +8,19 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap');
 
+/* =========================
+   LIGHT READABLE THEME
+========================= */
 :root {
-    --bg: #0b0b0b;
-    --panel: #111;
-    --text: #e6e6e6;
-    --muted: #a0a0a0;
-    --accent: #caa24a;
-    --border: #222;
+    --bg: #f6f7fb;
+    --panel: #ffffff;
+    --text: #111827;
+    --muted: #4b5563;
+    --accent: #1f4b99; /* restrained professional blue */
+    --border: #e5e7eb;
 }
 
+/* RESET */
 * {
     margin: 0;
     padding: 0;
@@ -31,7 +35,7 @@ body {
 }
 
 /* =========================
-   PAGE WRAPPER
+   LAYOUT
 ========================= */
 .container {
     max-width: 900px;
@@ -40,7 +44,7 @@ body {
 }
 
 /* =========================
-   HEADER / BLUF
+   HEADER
 ========================= */
 h1 {
     font-size: 2.2rem;
@@ -54,6 +58,9 @@ h1 {
     margin-bottom: 18px;
 }
 
+/* =========================
+   BLUF
+========================= */
 .bluf {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -73,7 +80,7 @@ h1 {
 }
 
 .section h2 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: var(--accent);
     margin-bottom: 10px;
     border-bottom: 1px solid var(--border);
@@ -91,27 +98,26 @@ h1 {
 }
 
 /* =========================
-   FOOTER
+   FOOTER (DARK BAR)
 ========================= */
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #0a0a0a;
-    border-top: 1px solid var(--border);
+    background: #0b0f19;
+    color: #ffffff;
+    border-top: 1px solid #111827;
     padding: 10px 20px;
     font-size: 0.8rem;
-    color: var(--muted);
 }
 
 footer span {
     margin-right: 18px;
+    opacity: 0.9;
 }
 
-/* =========================
-   LINKS
-========================= */
+/* LINKS */
 a {
     color: var(--accent);
     text-decoration: none;
@@ -127,118 +133,80 @@ a:hover {
 
 <div class="container">
 
-    <!-- =========================
-         HEADER / IDENTITY
-    ========================== -->
+    <!-- HEADER -->
     <h1>[[ YOUR NAME / AACHEN LLC ]]</h1>
 
     <div class="subtitle">
         Cybersecurity • Enterprise Architecture • IC / DoW Support
     </div>
 
-    <!-- =========================
-         BLUF
-    ========================== -->
+    <!-- BLUF -->
     <div class="bluf">
         <strong>BLUF:</strong>
-        [[ 2–4 sentence executive summary: cleared cybersecurity and enterprise architecture professional supporting IC and DoW environments across CCMD, MAJCOM, and deployed operations. ]]
+        [[ 2–4 sentence executive summary focusing on cleared IC / DoW enterprise architecture and cybersecurity delivery across CCMD / MAJCOM / deployed environments. ]]
     </div>
 
-    <!-- =========================
-         IDENTITY / CONTRACT PROFILE
-    ========================== -->
+    <!-- CONTRACT PROFILE -->
     <div class="section">
         <h2>Contracting Profile</h2>
 
         <div class="item meta">
-            CAGE: [[ CAGE CODE ]]<br>
+            CAGE: [[ CAGE ]]<br>
             UEI (SAM.gov): [[ UEI ]]<br>
             EIN: [[ EIN ]]<br>
             DUNS (legacy): [[ DUNS ]]<br>
-            NAICS: [[ NAICS CODES ]]<br>
-            State Entity #: [[ STATE REGISTRATION ]]
+            NAICS: [[ NAICS ]]<br>
+            State Entity #: [[ VA ENTITY ]]
         </div>
 
         <div class="item meta">
             Email: [[ email ]]<br>
-            Clearance: [[ TS/SCI / Poly / etc. ]]
+            Clearance: [[ TS/SCI / CI Poly / etc. ]]
         </div>
     </div>
 
-    <!-- =========================
-         CERTIFICATIONS
-    ========================== -->
+    <!-- CERTIFICATIONS -->
     <div class="section">
         <h2>Certifications</h2>
 
-        <div class="item">
-            CISSP — (ISC)² — [[ endorsement / status pending ]]
-        </div>
-
-        <div class="item">
-            TOGAF 10 Enterprise Architecture Practitioner
-        </div>
-
-        <div class="item">
-            VMware VCP-DCV
-        </div>
+        <div class="item">CISSP — (ISC)²</div>
+        <div class="item">TOGAF 10 Enterprise Architecture Practitioner</div>
+        <div class="item">VMware VCP-DCV</div>
 
         <div class="item meta">
-            DoW 8140 compliant certifications (primary alignment)<br>
-            DoW 8570 legacy alignment (secondary / transitional mapping)
+            DoW 8140 alignment (primary)<br>
+            DoW 8570 legacy mapping (secondary)
         </div>
     </div>
 
-    <!-- =========================
-         EXPERIENCE SUMMARY
-    ========================== -->
+    <!-- EXPERIENCE -->
     <div class="section">
         <h2>Operational Experience</h2>
 
         <div class="item">
             [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
-            <span class="meta">[[ impact statement ]]</span>
+            <span class="meta">[[ impact summary ]]</span>
         </div>
 
         <div class="item">
             [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
-            <span class="meta">[[ impact statement ]]</span>
-        </div>
-
-        <div class="item">
-            [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
-            <span class="meta">[[ impact statement ]]</span>
+            <span class="meta">[[ impact summary ]]</span>
         </div>
     </div>
 
-    <!-- =========================
-         DOMAINS
-    ========================== -->
+    <!-- DOMAINS -->
     <div class="section">
         <h2>Technical Domains</h2>
 
-        <div class="item">
-            Active Directory / Enterprise Identity (CCMD / MAJCOM scale)
-        </div>
-
-        <div class="item">
-            Cybersecurity Architecture & Operations (IC / DoW environments)
-        </div>
-
-        <div class="item">
-            Enterprise Infrastructure (VMware / hybrid cloud)
-        </div>
-
-        <div class="item">
-            Intelligence & ISR Systems (US BICES, deployed environments)
-        </div>
+        <div class="item">Enterprise Identity (CCMD / MAJCOM scale AD)</div>
+        <div class="item">Cybersecurity Architecture & Operations (IC / DoW)</div>
+        <div class="item">Virtualization / Cloud Infrastructure (VMware)</div>
+        <div class="item">ISR / Intelligence Systems (US BICES, deployed environments)</div>
     </div>
 
 </div>
 
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- FOOTER -->
 <footer>
     <span>Aachen LLC</span>
     <span>[[ email ]]</span>
