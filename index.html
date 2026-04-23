@@ -10,9 +10,9 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
-    --hud: #00ff66;
-    --accent: #b38b2e;
-    --bg: #050505;
+    --hud:#00ff66;
+    --accent:#b38b2e;
+    --bg:#050505;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -25,7 +25,7 @@ html, body {
     overflow-y:auto;
 }
 
-/* ========================= CONTENT ========================= */
+/* ================= CONTENT ================= */
 
 #content {
     width:100%;
@@ -62,10 +62,9 @@ html, body {
     font-size:12px;
     color:#aaa;
     margin-bottom:1.5rem;
-    line-height:1.4;
 }
 
-/* ========================= MAP HUD ========================= */
+/* ================= MAP ================= */
 
 #map-container {
     position:fixed;
@@ -76,6 +75,14 @@ html, body {
     background:#000;
     border-top:1px solid #222;
     overflow:hidden;
+}
+
+/* fallback so it NEVER looks broken */
+#map-container::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at center, rgba(0,255,102,0.08), transparent 60%);
 }
 
 #hud-label {
@@ -89,26 +96,9 @@ html, body {
     background:rgba(0,0,0,0.75);
     border:1px solid var(--hud);
     padding:4px 8px;
-    letter-spacing:0.5px;
 }
 
-/* subtle scanline overlay */
-#map-container::after {
-    content:"";
-    position:absolute;
-    inset:0;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(0,255,102,0.03),
-        rgba(0,255,102,0.03) 1px,
-        transparent 1px,
-        transparent 3px
-    );
-    pointer-events:none;
-    mix-blend-mode:overlay;
-}
-
-/* ========================= MAP IMAGES ========================= */
+/* ================= MAP IMAGES ================= */
 
 .map-image {
     position:absolute;
@@ -118,19 +108,14 @@ html, body {
     object-fit:cover;
     opacity:0;
     transition:opacity 0.4s ease;
-    filter: grayscale(1) contrast(1.25) brightness(0.6);
-    transform: scale(1.02);
+    filter:grayscale(1) contrast(1.25) brightness(0.65);
+    transform:scale(1.02);
 }
 
-.map-image.active {
-    opacity:1;
-}
-
-/* ========================= MOBILE ========================= */
+.map-image.active { opacity:1; }
 
 @media (max-width:900px) {
     #map-container { height:28vh; }
-    #content { padding:0 6%; }
 }
 </style>
 </head>
@@ -155,17 +140,17 @@ html, body {
 
     <div class="section" data-map="harvard">
         <h2>1999</h2>
-        <p>KSG Institute of Politics & Harvard University Dept. of Mol. & Cel. Biol., McMahon Lab — Cambridge, MA</p>
+        <p>KSG Institute of Politics & Harvard McMahon Lab — Cambridge, MA</p>
     </div>
 
     <div class="section" data-map="nasa">
         <h2>2001–2003</h2>
-        <p>NASA Code FT - NASA Engineering Training — Washington, DC</p>
+        <p>NASA Code FT Engineering Training — Washington, DC</p>
     </div>
 
     <div class="section" data-map="itt">
         <h2>2011–2012</h2>
-        <p>Ft Benning CRC → Kuwait → BAF → FOB Ghazni</p>
+        <p>(ITT) Ft Benning CRC → Kuwait → BAF → Ghazni</p>
     </div>
 
 </div>
@@ -173,22 +158,26 @@ html, body {
 <div id="map-container">
     <div id="hud-label">MAP DISPLAY // STATIC SNAPSHOT MODE</div>
 
-    <!-- FRONT ROYAL (home anchor) -->
-    <img class="map-image active" id="front_royal"
-        src="https://staticmap.openstreetmap.de/staticmap.php?center=38.9180,-78.1947&zoom=8&size=1200x300&markers=38.9180,-78.1947,green">
+    <!-- FRONT ROYAL -->
+    <img class="map-image active"
+        id="front_royal"
+        src="https://staticmap.openstreetmap.fr/osmfr/staticmap.php?center=38.9180,-78.1947&zoom=8&size=1200x300&markers=38.9180,-78.1947,green">
 
     <!-- HARVARD -->
-    <img class="map-image" id="harvard"
-        src="https://staticmap.openstreetmap.de/staticmap.php?center=42.3732,-71.1167&zoom=12&size=1200x300&markers=42.3732,-71.1167,green">
+    <img class="map-image"
+        id="harvard"
+        src="https://staticmap.openstreetmap.fr/osmfr/staticmap.php?center=42.3732,-71.1167&zoom=12&size=1200x300&markers=42.3732,-71.1167,green">
 
     <!-- NASA -->
-    <img class="map-image" id="nasa"
-        src="https://staticmap.openstreetmap.de/staticmap.php?center=38.8831,-77.0163&zoom=11&size=1200x300&markers=38.8831,-77.0163,green">
+    <img class="map-image"
+        id="nasa"
+        src="https://staticmap.openstreetmap.fr/osmfr/staticmap.php?center=38.8831,-77.0163&zoom=11&size=1200x300&markers=38.8831,-77.0163,green">
 
-    <!-- ITT (multi-point framed properly) -->
-    <img class="map-image" id="itt"
-        src="https://staticmap.openstreetmap.de/staticmap.php?center=40,50&zoom=2&size=1200x300&
-markers=32.3617,-84.9493,green|
+    <!-- ITT MULTI -->
+    <img class="map-image"
+        id="itt"
+        src="https://staticmap.openstreetmap.fr/osmfr/staticmap.php?center=45,55&zoom=2&size=1200x300&markers=
+32.3617,-84.9493,green|
 29.3759,47.9774,green|
 34.9462,69.2646,green|
 33.5560,68.4200,green">
