@@ -9,18 +9,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap');
 
 /* =========================
-   LIGHT READABLE THEME
+   PURE B/W THEME
 ========================= */
 :root {
-    --bg: #f6f7fb;
-    --panel: #ffffff;
-    --text: #111827;
-    --muted: #4b5563;
-    --accent: #1f4b99; /* restrained professional blue */
-    --border: #e5e7eb;
+    --bg: #ffffff;
+    --text: #111111;
+    --muted: #555555;
+    --border: #e6e6e6;
+    --panel: #f7f7f7;
 }
 
-/* RESET */
 * {
     margin: 0;
     padding: 0;
@@ -53,7 +51,7 @@ h1 {
 }
 
 .subtitle {
-    color: var(--accent);
+    color: var(--text);
     font-weight: 500;
     margin-bottom: 18px;
 }
@@ -69,7 +67,7 @@ h1 {
 }
 
 .bluf strong {
-    color: var(--accent);
+    font-weight: 700;
 }
 
 /* =========================
@@ -80,8 +78,8 @@ h1 {
 }
 
 .section h2 {
-    font-size: 1.15rem;
-    color: var(--accent);
+    font-size: 1.1rem;
+    font-weight: 600;
     margin-bottom: 10px;
     border-bottom: 1px solid var(--border);
     padding-bottom: 6px;
@@ -98,32 +96,27 @@ h1 {
 }
 
 /* =========================
-   FOOTER (DARK BAR)
+   FOOTER (BLACK BAR)
 ========================= */
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #0b0f19;
+    background: #000000;
     color: #ffffff;
-    border-top: 1px solid #111827;
+    border-top: 1px solid #222;
     padding: 10px 20px;
     font-size: 0.8rem;
 }
 
 footer span {
     margin-right: 18px;
-    opacity: 0.9;
 }
 
-/* LINKS */
+/* LINKS (neutral grayscale) */
 a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-a:hover {
+    color: #000;
     text-decoration: underline;
 }
 </style>
@@ -143,7 +136,7 @@ a:hover {
     <!-- BLUF -->
     <div class="bluf">
         <strong>BLUF:</strong>
-        [[ 2–4 sentence executive summary focusing on cleared IC / DoW enterprise architecture and cybersecurity delivery across CCMD / MAJCOM / deployed environments. ]]
+        [[ Clear 2–4 sentence summary of cleared IC / DoW enterprise cybersecurity and architecture experience across CCMD, MAJCOM, and deployed environments. ]]
     </div>
 
     <!-- CONTRACT PROFILE -->
@@ -160,7 +153,7 @@ a:hover {
         </div>
 
         <div class="item meta">
-            Email: [[ email ]]<br>
+            Email: [[ EMAIL ]]<br>
             Clearance: [[ TS/SCI / CI Poly / etc. ]]
         </div>
     </div>
@@ -185,23 +178,24 @@ a:hover {
 
         <div class="item">
             [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
-            <span class="meta">[[ impact summary ]]</span>
+            <span class="meta">[[ impact statement ]]</span>
         </div>
 
         <div class="item">
             [[ ROLE ]] — [[ ORGANIZATION ]] — [[ YEARS ]]<br>
-            <span class="meta">[[ impact summary ]]</span>
+            <span class="meta">[[ impact statement ]]</span>
         </div>
+
     </div>
 
     <!-- DOMAINS -->
     <div class="section">
         <h2>Technical Domains</h2>
 
-        <div class="item">Enterprise Identity (CCMD / MAJCOM scale AD)</div>
+        <div class="item">Enterprise Identity (CCMD / MAJCOM AD environments)</div>
         <div class="item">Cybersecurity Architecture & Operations (IC / DoW)</div>
-        <div class="item">Virtualization / Cloud Infrastructure (VMware)</div>
-        <div class="item">ISR / Intelligence Systems (US BICES, deployed environments)</div>
+        <div class="item">Enterprise Infrastructure (VMware / hybrid environments)</div>
+        <div class="item">Intelligence / ISR Systems (US BICES, deployed systems)</div>
     </div>
 
 </div>
@@ -209,8 +203,8 @@ a:hover {
 <!-- FOOTER -->
 <footer>
     <span>Aachen LLC</span>
-    <span>[[ email ]]</span>
-    <span>[[ phone ]]</span>
+    <span>[[ EMAIL ]]</span>
+    <span>[[ PHONE ]]</span>
     <span>© [[ YEAR ]]</span>
 </footer>
 
