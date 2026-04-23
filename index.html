@@ -21,7 +21,6 @@ body {
     display: flex;
 }
 
-/* ✅ Better layout balance */
 #map-container {
     position: sticky;
     top: 0;
@@ -64,7 +63,6 @@ body {
 h2 { color: #fff; margin-bottom: 0.5rem; }
 p { color: #aaa; }
 
-/* Tooltip styling */
 .leaflet-tooltip {
     background: rgba(0,0,0,0.85) !important;
     color: #fff !important;
@@ -89,7 +87,6 @@ p { color: #aaa; }
 <div id="map-container"><div id="map"></div></div>
 
 <div id="content">
-    <!-- ✅ Hero has NO coordinates -->
     <div class="section active">
         <h1 class="logo">Certavi et Vici</h1>
         <p class="tagline">Cybersecurity Solutions</p>
@@ -101,127 +98,68 @@ p { color: #aaa; }
 
 <script>
 /* =========================================================
-   ✅ YOUR DATA GOES HERE (replace with resume later)
+   ✅ ROLE-BASED DATA (supports multi-location jobs)
    ========================================================= */
 
-const locations = [
+const roles = [
+
     {
         year: "1999",
         title: "Harvard Kennedy School",
-        lat: 42.3718,
-        lng: -71.1213,
-        zoom: 15,
-        description: "Cambridge, MA"
+        locations: [
+            { lat: 42.3718, lng: -71.1213, label: "Cambridge, MA" }
+        ]
     },
-    {
-        year: "1999-2000",
-        title: "McMahon Lab",
-        lat: 42.3789,
-        lng: -71.1154,
-        zoom: 16,
-        description: "Harvard University"
-    },
-    {
-        year: "2000-2001",
-        title: "Boston Transition",
-        lat: 42.3601,
-        lng: -71.0589,
-        zoom: 13,
-        description: "Multiple organizations"
-    },
-    {
-        year: "2001",
-        title: "Capitol Hill",
-        lat: 38.8998,
-        lng: -77.0061,
-        zoom: 15,
-        description: "Washington DC"
-    },
+
     {
         year: "2001-2003",
         title: "NASA HQ",
-        lat: 38.8831,
-        lng: -77.0163,
-        zoom: 16,
-        description: "Code FT"
+        locations: [
+            { lat: 38.8831, lng: -77.0163, label: "Washington, DC" }
+        ]
     },
-    {
-        year: "2004-2005",
-        title: "Wolf Trap Foundation for the Performing Arts",
-        lat:  38.9385,
-        lng: -77.2648,
-        zoom: 15,
-        description: "Vienna, VA"
-    },
-    {
-        year: "2005-2006",
-        title: "Dataprise, Inc.",
-        lat:  39.1023,
-        lng: -77.2023,
-        zoom: 15,
-        description: "Rockville, MD"
-    },
-    {
-        year: "2006-2011",
-        title: "The Heritage Foundation",
-        lat:  38.8955,
-        lng: -77.0026,
-        zoom: 15,
-        description: "Washington, DC"
-    },
+
+    /* ✅ MULTI-LOCATION JOB */
     {
         year: "2011",
-        title: "ITT",
-        lat:  38.8955,
-        lng: -77.0026,
-        zoom: 15,
-        description: "Ft Benning, GA"
-    },
-    {
-        year: "2011",
-        title: "ITT",
-        lat:  38.8955,
-        lng: -77.0026,
-        zoom: 15,
-        description: "Ali Asaleem, Kuwait"
-    },
+        title: "ITT (Deployment)",
+        locations: [
+            { lat: 32.3617, lng: -84.9493, label: "Ft. Benning, GA" },
+            { lat: 29.3759, lng: 47.9774, label: "Kuwait" },
+            { lat: 34.9462, lng: 69.2646, label: "Bagram, Afghanistan" },
+            { lat: 33.5560, lng: 68.4200, label: "Ghazni, Afghanistan" }
+        ]
+    }
+
 ];
 
 /* =========================================================
-   BUILD CONTENT FROM DATA
+   BUILD CONTENT
    ========================================================= */
 
 const content = document.getElementById('content');
 
-locations.forEach(loc => {
+roles.forEach(role => {
     const div = document.createElement('div');
     div.className = 'section';
-    div.dataset.lat = loc.lat;
-    div.dataset.lng = loc.lng;
-    div.dataset.zoom = loc.zoom;
-    div.dataset.place = loc.title;
+    div.dataset.role = role.title;
 
     div.innerHTML = `
-        <h2>${loc.year}</h2>
-        <p><strong>${loc.title}</strong><br>${loc.description}</p>
+        <h2>${role.year}</h2>
+        <p><strong>${role.title}</strong></p>
     `;
 
     content.appendChild(div);
 });
 
 /* =========================================================
-   MAP INIT (auto-fit to real data)
+   MAP INIT
    ========================================================= */
-
-const coords = locations.map(l => [l.lat, l.lng]);
 
 const map = L.map('map', {
     zoomControl: false,
     attributionControl: false
 });
-
-const bounds = L.latLngBounds(coords);
-map.fitBounds(bounds, { padding: [50, 50] });
 
 /* Dark map */
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -229,38 +167,81 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 20
 }).addTo(map);
 
-/* Path */
+/* Start at FIRST job */
+const first = roles[0].locations[0];
+map.setView([first.lat, first.lng], 6);
 
-L.polyline(coords, {
-    color: '#666666',
-    weight: 1.5,
-    opacity: 0.4,
-    dashArray: '4,6'   // subtle dashed line
-}).addTo(map);
+/* =========================================================
+   CURVED ARC FUNCTION
+   ========================================================= */
 
-/* Scroll behavior */
+function createArc(start, end) {
+    const latlngs = [];
+    const offset = 10; // controls curve height
+
+    for (let t = 0; t <= 1; t += 0.05) {
+        const lat = (1 - t) * start[0] + t * end[0] + offset * Math.sin(Math.PI * t);
+        const lng = (1 - t) * start[1] + t * end[1];
+        latlngs.push([lat, lng]);
+    }
+
+    return latlngs;
+}
+
+/* =========================================================
+   SCROLL BEHAVIOR
+   ========================================================= */
+
 const sections = document.querySelectorAll('.section');
-let marker;
+let markers = [];
+let lines = [];
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting && entry.target.dataset.lat) {
+        if (!entry.isIntersecting) return;
 
-            sections.forEach(s => s.classList.remove('active'));
-            entry.target.classList.add('active');
+        sections.forEach(s => s.classList.remove('active'));
+        entry.target.classList.add('active');
 
-            const lat = parseFloat(entry.target.dataset.lat);
-            const lng = parseFloat(entry.target.dataset.lng);
-            const zoom = parseInt(entry.target.dataset.zoom);
-            const place = entry.target.dataset.place;
+        const role = roles.find(r => r.title === entry.target.dataset.role);
+        if (!role) return;
 
-            map.flyTo([lat, lng], zoom, { duration: 2 });
+        // Clear old layers
+        markers.forEach(m => map.removeLayer(m));
+        lines.forEach(l => map.removeLayer(l));
+        markers = [];
+        lines = [];
 
-            if (marker) map.removeLayer(marker);
+        const coords = role.locations.map(l => [l.lat, l.lng]);
 
-            marker = L.marker([lat, lng]).addTo(map)
-                .bindTooltip(place, { permanent: true, direction: 'top' })
+        /* ✅ MULTI-POINT ZOOM */
+        if (coords.length > 1) {
+            const bounds = L.latLngBounds(coords);
+            map.fitBounds(bounds, { padding: [80, 80], maxZoom: 8 });
+        } else {
+            map.flyTo(coords[0], 10, { duration: 2 });
+        }
+
+        /* Markers */
+        role.locations.forEach(loc => {
+            const m = L.marker([loc.lat, loc.lng]).addTo(map)
+                .bindTooltip(loc.label, { permanent: true, direction: 'top' })
                 .openTooltip();
+            markers.push(m);
+        });
+
+        /* Curved arcs */
+        for (let i = 0; i < coords.length - 1; i++) {
+            const arc = createArc(coords[i], coords[i + 1]);
+
+            const line = L.polyline(arc, {
+                color: '#555',
+                weight: 1.5,
+                opacity: 0.5,
+                dashArray: '4,6'
+            }).addTo(map);
+
+            lines.push(line);
         }
     });
 }, { threshold: 0.6 });
