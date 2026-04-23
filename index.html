@@ -15,10 +15,13 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-    font-family: 'Inter', sans-serif;
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
     background: #050505;
     color: #e0e0e0;
+    font-family: 'Inter', sans-serif;
 }
 
 /* =========================
@@ -27,6 +30,7 @@ body {
 #content {
     width: 100%;
     padding: 0 10%;
+    padding-bottom: 45vh; /* IMPORTANT: space for bottom map */
 }
 
 .section {
@@ -36,7 +40,6 @@ body {
     justify-content: center;
     opacity: 0.3;
     transition: opacity 0.5s ease;
-    padding-bottom: 42vh; /* prevents map overlap */
 }
 
 .section.active { opacity: 1; }
@@ -58,7 +61,7 @@ h2 { color: #fff; margin-bottom: 0.5rem; }
 p { color: #aaa; }
 
 /* =========================
-   🧠 HUD TOOLTIP (GREEN TERMINAL)
+   HUD TOOLTIP
 ========================= */
 .leaflet-tooltip {
     background: rgba(0, 0, 0, 0.92) !important;
@@ -73,7 +76,7 @@ p { color: #aaa; }
 }
 
 /* =========================
-   🟢 GREEN DOT MARKERS
+   GREEN DOT MARKERS
 ========================= */
 .custom-dot div {
     width: 7px;
@@ -91,7 +94,7 @@ p { color: #aaa; }
 }
 
 /* =========================
-   🛰 MAP HUD (BOTTOM FRAME)
+   BOTTOM MAP HUD
 ========================= */
 #map-container {
     position: fixed;
@@ -178,7 +181,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 }).addTo(map);
 
 /* start */
-map.setView([roles[0].locations[0].lat, roles[0].locations[0].lng], 5);
+map.setView([roles[0].locations[0].lat, roles[0].locations[0].lng], 6);
 
 /* =========================
    ICON
@@ -232,20 +235,15 @@ const observer = new IntersectionObserver((entries) => {
         if (coords.length > 1) {
             map.fitBounds(L.latLngBounds(coords), {
                 padding: [80, 80],
-                maxZoom: 6
+                maxZoom: 7
             });
         } else {
-            map.flyTo(coords[0], 8, { duration: 2 });
+            map.flyTo(coords[0], 10, { duration: 2 });
         }
 
         role.locations.forEach(loc => {
             const m = L.marker([loc.lat, loc.lng], { icon: greenDot }).addTo(map);
-
-            m.bindTooltip(loc.label, {
-                direction: 'top',
-                permanent: false
-            });
-
+            m.bindTooltip(loc.label, { direction: 'top', permanent: false });
             markers.push(m);
         });
 
