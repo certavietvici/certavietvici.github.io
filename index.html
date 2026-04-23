@@ -25,12 +25,12 @@ html, body {
 }
 
 /* =========================
-   CONTENT (FIXED SCROLL HEIGHT)
+   CONTENT
 ========================= */
 #content {
     width: 100%;
     padding: 0 10%;
-    padding-bottom: 50vh; /* room for HUD map */
+    padding-bottom: 25vh; /* reduced since map is smaller */
 }
 
 .section {
@@ -94,14 +94,14 @@ p { color: #aaa; }
 }
 
 /* =========================
-   BOTTOM HUD MAP
+   SMALLER HUD MAP (FIX)
 ========================= */
 #map-container {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 38vh;
+    height: 20vh;   /* 🔥 reduced from 38vh */
     background: rgba(0,0,0,0.95);
     border-top: 1px solid #222;
     z-index: 9999;
@@ -113,7 +113,7 @@ p { color: #aaa; }
 }
 
 @media (max-width: 900px) {
-    #map-container { height: 40vh; }
+    #map-container { height: 22vh; }
 }
 </style>
 </head>
@@ -167,7 +167,7 @@ const roles = [
 ];
 
 /* =========================
-   BUILD SCROLL SECTIONS (FIX)
+   BUILD SCROLL SECTIONS
 ========================= */
 const content = document.getElementById('content');
 
@@ -186,19 +186,21 @@ roles.forEach(role => {
 });
 
 /* =========================
-   MAP INIT
+   MAP INIT (FRONT ROYAL DEFAULT)
 ========================= */
 const map = L.map('map', {
     zoomControl: false,
     attributionControl: false
 });
 
+/* Front Royal, VA */
+const HOME = [38.9182, -78.1944];
+map.setView(HOME, 7);
+
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     subdomains: 'abcd',
     maxZoom: 20
 }).addTo(map);
-
-map.setView([roles[0].locations[0].lat, roles[0].locations[0].lng], 6);
 
 /* =========================
    ICON
@@ -226,7 +228,7 @@ function createArc(start, end) {
 }
 
 /* =========================
-   SCROLL OBSERVER
+   SCROLL LOGIC
 ========================= */
 const sections = document.querySelectorAll('.section');
 let markers = [];
