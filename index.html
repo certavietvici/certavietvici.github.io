@@ -9,8 +9,9 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
 
-:root { --accent: #b38b2e; }
+:root { --accent: #b38b2e; --hud: #00ff66; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -63,31 +64,46 @@ body {
 h2 { color: #fff; margin-bottom: 0.5rem; }
 p { color: #aaa; }
 
-/* Tooltip */
+/* =========================================================
+   🟢 HUD TOOLTIP (WAR GAMES STYLE)
+   ========================================================= */
 .leaflet-tooltip {
-    background: rgba(0,0,0,0.85) !important;
-    color: #fff !important;
-    border: 1px solid #444 !important;
-    font-family: monospace;
+    background: rgba(0, 0, 0, 0.92) !important;
+    color: var(--hud) !important;
+    border: 1px solid var(--hud) !important;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(0,255,102,0.25);
+    text-shadow: 0 0 4px rgba(0,255,102,0.4);
 }
 
-/* ✅ SMALL DOT MARKERS (replaces big pins) */
+/* =========================================================
+   🟢 SMALL GREEN DOT MARKERS
+   ========================================================= */
 .custom-dot {
     background: transparent;
     border: none;
 }
 
 .custom-dot div {
-    width: 8px;
-    height: 8px;
-    background: #ffffff;
+    width: 7px;
+    height: 7px;
+    background: var(--hud);
     border-radius: 50%;
-    box-shadow: 0 0 6px rgba(255,255,255,0.6);
+    box-shadow: 0 0 8px rgba(0,255,102,0.6);
 }
 
-/* optional subtle hover scale */
-.custom-dot:hover div {
-    transform: scale(1.4);
+/* subtle pulse */
+.custom-dot div {
+    animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 4px rgba(0,255,102,0.3); }
+    50% { box-shadow: 0 0 10px rgba(0,255,102,0.8); }
+    100% { box-shadow: 0 0 4px rgba(0,255,102,0.3); }
 }
 
 @media (max-width: 900px) {
@@ -123,24 +139,24 @@ const roles = [
         year: "1999",
         title: "Harvard Kennedy School",
         locations: [
-            { lat: 42.3718, lng: -71.1213, label: "Cambridge, MA" }
+            { lat: 42.3718, lng: -71.1213, label: "CAMBRIDGE // MA" }
         ]
     },
     {
         year: "2001-2003",
         title: "NASA HQ",
         locations: [
-            { lat: 38.8831, lng: -77.0163, label: "Washington, DC" }
+            { lat: 38.8831, lng: -77.0163, label: "WASHINGTON DC" }
         ]
     },
     {
         year: "2011",
-        title: "ITT (Deployment)",
+        title: "ITT (DEPLOYMENT)",
         locations: [
-            { lat: 32.3617, lng: -84.9493, label: "Ft. Benning, GA" },
-            { lat: 29.3759, lng: 47.9774, label: "Kuwait" },
-            { lat: 34.9462, lng: 69.2646, label: "Bagram, Afghanistan" },
-            { lat: 33.5560, lng: 68.4200, label: "Ghazni, Afghanistan" }
+            { lat: 32.3617, lng: -84.9493, label: "FT BENNING // GA" },
+            { lat: 29.3759, lng: 47.9774, label: "KUWAIT" },
+            { lat: 34.9462, lng: 69.2646, label: "BAGRAM // AF" },
+            { lat: 33.5560, lng: 68.4200, label: "GHAZNI // AF" }
         ]
     }
 ];
@@ -183,6 +199,16 @@ const first = roles[0].locations[0];
 map.setView([first.lat, first.lng], 6);
 
 /* =========================================================
+   ICON
+   ========================================================= */
+
+const greenDot = L.divIcon({
+    className: 'custom-dot',
+    html: '<div></div>',
+    iconSize: [8, 8]
+});
+
+/* =========================================================
    ARC FUNCTION
    ========================================================= */
 
@@ -207,12 +233,6 @@ const sections = document.querySelectorAll('.section');
 let markers = [];
 let lines = [];
 
-const smallDot = L.divIcon({
-    className: 'custom-dot',
-    html: '<div></div>',
-    iconSize: [8, 8]
-});
-
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (!entry.isIntersecting) return;
@@ -231,17 +251,21 @@ const observer = new IntersectionObserver((entries) => {
         const coords = role.locations.map(l => [l.lat, l.lng]);
 
         if (coords.length > 1) {
-            const bounds = L.latLngBounds(coords);
-            map.fitBounds(bounds, { padding: [80, 80], maxZoom: 7 });
+            map.fitBounds(L.latLngBounds(coords), {
+                padding: [80, 80],
+                maxZoom: 7
+            });
         } else {
             map.flyTo(coords[0], 10, { duration: 2 });
         }
 
-        role.locations.forEach((loc, i) => {
-            const m = L.marker([loc.lat, loc.lng], { icon: smallDot }).addTo(map);
+        role.locations.forEach(loc => {
+            const m = L.marker([loc.lat, loc.lng], { icon: greenDot }).addTo(map);
 
-            // FIX: no permanent labels → prevents overlap
-            m.bindTooltip(loc.label, { direction: 'top' });
+            m.bindTooltip(loc.label, {
+                direction: 'top',
+                permanent: false   // IMPORTANT: no overlap anymore
+            });
 
             markers.push(m);
         });
@@ -250,10 +274,10 @@ const observer = new IntersectionObserver((entries) => {
             const arc = createArc(coords[i], coords[i + 1]);
 
             const line = L.polyline(arc, {
-                color: '#555',
-                weight: 1.5,
-                opacity: 0.4,
-                dashArray: '4,6'
+                color: '#00ff66',
+                weight: 1,
+                opacity: 0.35,
+                dashArray: '3,6'
             }).addTo(map);
 
             lines.push(line);
