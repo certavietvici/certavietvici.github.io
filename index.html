@@ -214,10 +214,12 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 }).addTo(map);
 
 /* Path */
+
 L.polyline(coords, {
-    color: '#ffffff',
-    weight: 2,
-    opacity: 0.8
+    color: '#666666',
+    weight: 1.5,
+    opacity: 0.4,
+    dashArray: '4,6'   // subtle dashed line
 }).addTo(map);
 
 /* Scroll behavior */
