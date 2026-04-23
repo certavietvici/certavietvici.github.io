@@ -5,115 +5,104 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Certavi et Vici — Aachen LLC</title>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
 
-:root { --hud: #00ff66; --accent: #b38b2e; }
+:root {
+    --hud: #00ff66;
+    --bg: #050505;
+}
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
 html, body {
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background: #050505;
+    background: var(--bg);
     color: #e0e0e0;
     font-family: 'Inter', sans-serif;
+    overflow-y: auto;
 }
 
 /* =========================
-   CONTENT
+   LAYOUT
 ========================= */
 #content {
     width: 100%;
     padding: 0 10%;
-    padding-bottom: 25vh; /* reduced since map is smaller */
+    padding-bottom: 55vh;
 }
 
 .section {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    opacity: 0.3;
-    transition: opacity 0.5s ease;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    opacity:0.3;
+    transition: opacity 0.4s ease;
 }
 
-.section.active { opacity: 1; }
+.section.active { opacity:1; }
 
 .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    color: #fff;
-    margin-bottom: 1rem;
+    font-family:'Playfair Display', serif;
+    font-size:3rem;
+    color:#fff;
+    margin-bottom:1rem;
 }
 
 .tagline {
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 2rem;
-}
-
-h2 { color: #fff; margin-bottom: 0.5rem; }
-p { color: #aaa; }
-
-/* =========================
-   HUD TOOLTIP
-========================= */
-.leaflet-tooltip {
-    background: rgba(0, 0, 0, 0.92) !important;
-    color: var(--hud) !important;
-    border: 1px solid var(--hud) !important;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    padding: 4px 8px;
-    border-radius: 3px;
-    box-shadow: 0 0 8px rgba(0,255,102,0.25);
-    text-shadow: 0 0 4px rgba(0,255,102,0.4);
+    color: var(--hud);
+    font-weight:600;
+    margin-bottom:2rem;
 }
 
 /* =========================
-   GREEN DOT MARKERS
-========================= */
-.custom-dot div {
-    width: 7px;
-    height: 7px;
-    background: var(--hud);
-    border-radius: 50%;
-    box-shadow: 0 0 8px rgba(0,255,102,0.6);
-    animation: pulse 2.5s infinite;
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 4px rgba(0,255,102,0.3); }
-    50% { box-shadow: 0 0 10px rgba(0,255,102,0.8); }
-    100% { box-shadow: 0 0 4px rgba(0,255,102,0.3); }
-}
-
-/* =========================
-   SMALLER HUD MAP (FIX)
+   STATIC MAP FRAME (BOTTOM HUD)
 ========================= */
 #map-container {
     position: fixed;
-    left: 0;
     bottom: 0;
+    left: 0;
     width: 100%;
-    height: 20vh;   /* 🔥 reduced from 38vh */
-    background: rgba(0,0,0,0.95);
+    height: 20vh; /* reduced size as requested */
     border-top: 1px solid #222;
-    z-index: 9999;
+    background: #000;
+    overflow: hidden;
 }
 
-#map {
+#map-frame {
     width: 100%;
     height: 100%;
+    position: relative;
 }
 
-@media (max-width: 900px) {
-    #map-container { height: 22vh; }
+/* smooth fade between images */
+.map-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    filter: grayscale(1) contrast(1.2) brightness(0.6);
+}
+
+.map-image.active {
+    opacity: 1;
+}
+
+/* HUD overlay */
+#hud-label {
+    position:absolute;
+    top:8px;
+    left:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color: var(--hud);
+    background: rgba(0,0,0,0.7);
+    padding:4px 8px;
+    border:1px solid var(--hud);
 }
 </style>
 </head>
@@ -121,118 +110,56 @@ p { color: #aaa; }
 <body>
 
 <div id="content">
-    <div class="section active">
+
+    <div class="section active" data-map="front_royal">
         <h1 class="logo">Certavi et Vici</h1>
-        <p class="tagline">Cybersecurity Solutions</p>
-        <p>Scroll to explore the journey.</p>
+        <p class="tagline">Cybersecurity Operations</p>
+        <p>Scroll to navigate operational history.</p>
+    </div>
+
+    <div class="section" data-map="harvard">
+        <h2>1999</h2>
+        <p>Harvard Kennedy School — Cambridge, MA</p>
+    </div>
+
+    <div class="section" data-map="nasa">
+        <h2>2001–2003</h2>
+        <p>NASA HQ — Washington, DC</p>
+    </div>
+
+    <div class="section" data-map="itt">
+        <h2>2011 Deployment</h2>
+        <p>Ft Benning → Kuwait → Bagram → Ghazni</p>
+    </div>
+
+</div>
+
+<!-- STATIC MAP FRAME -->
+<div id="map-container">
+    <div id="hud-label">MAP DISPLAY // STATIC SNAPSHOT MODE</div>
+    <div id="map-frame">
+
+        <!-- Front Royal (default / anchor) -->
+        <img class="map-image active" id="front_royal"
+             src="https://staticmap.openstreetmap.de/staticmap.php?center=38.9180,-78.1947&zoom=7&size=1200x300&markers=38.9180,-78.1947,green">
+
+        <!-- Harvard -->
+        <img class="map-image" id="harvard"
+             src="https://staticmap.openstreetmap.de/staticmap.php?center=42.3732,-71.1167&zoom=11&size=1200x300&markers=42.3732,-71.1167,green">
+
+        <!-- NASA -->
+        <img class="map-image" id="nasa"
+             src="https://staticmap.openstreetmap.de/staticmap.php?center=38.8831,-77.0163&zoom=10&size=1200x300&markers=38.8831,-77.0163,green">
+
+        <!-- ITT multi-node composite center -->
+        <img class="map-image" id="itt"
+             src="https://staticmap.openstreetmap.de/staticmap.php?center=33.5,55&zoom=3&size=1200x300&markers=32.3617,-84.9493,green|29.3759,47.9774,green|34.9462,69.2646,green|33.5560,68.4200,green">
+
     </div>
 </div>
 
-<div id="map-container">
-    <div id="map"></div>
-</div>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
-
-/* =========================
-   DATA
-========================= */
-const roles = [
-    {
-        year: "1999",
-        title: "Harvard Kennedy School",
-        locations: [
-            { lat: 42.3718, lng: -71.1213, label: "CAMBRIDGE // MA" }
-        ]
-    },
-    {
-        year: "2001-2003",
-        title: "NASA HQ",
-        locations: [
-            { lat: 38.8831, lng: -77.0163, label: "WASHINGTON DC" }
-        ]
-    },
-    {
-        year: "2011",
-        title: "ITT (DEPLOYMENT)",
-        locations: [
-            { lat: 32.3617, lng: -84.9493, label: "FT BENNING // GA" },
-            { lat: 29.3759, lng: 47.9774, label: "KUWAIT" },
-            { lat: 34.9462, lng: 69.2646, label: "BAGRAM // AF" },
-            { lat: 33.5560, lng: 68.4200, label: "GHAZNI // AF" }
-        ]
-    }
-];
-
-/* =========================
-   BUILD SCROLL SECTIONS
-========================= */
-const content = document.getElementById('content');
-
-roles.forEach(role => {
-    const div = document.createElement('div');
-    div.className = 'section';
-    div.dataset.role = role.title;
-
-    div.innerHTML = `
-        <h2>${role.year}</h2>
-        <p><strong>${role.title}</strong></p>
-        <p>${role.locations.map(l => l.label).join(' → ')}</p>
-    `;
-
-    content.appendChild(div);
-});
-
-/* =========================
-   MAP INIT (FRONT ROYAL DEFAULT)
-========================= */
-const map = L.map('map', {
-    zoomControl: false,
-    attributionControl: false
-});
-
-/* Front Royal, VA */
-const HOME = [38.9182, -78.1944];
-map.setView(HOME, 7);
-
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd',
-    maxZoom: 20
-}).addTo(map);
-
-/* =========================
-   ICON
-========================= */
-const greenDot = L.divIcon({
-    className: 'custom-dot',
-    html: '<div></div>',
-    iconSize: [8, 8]
-});
-
-/* =========================
-   ARC
-========================= */
-function createArc(start, end) {
-    const points = [];
-    const offset = 10;
-
-    for (let t = 0; t <= 1; t += 0.05) {
-        const lat = (1 - t) * start[0] + t * end[0] + offset * Math.sin(Math.PI * t);
-        const lng = (1 - t) * start[1] + t * end[1];
-        points.push([lat, lng]);
-    }
-
-    return points;
-}
-
-/* =========================
-   SCROLL LOGIC
-========================= */
 const sections = document.querySelectorAll('.section');
-let markers = [];
-let lines = [];
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -241,46 +168,19 @@ const observer = new IntersectionObserver((entries) => {
         sections.forEach(s => s.classList.remove('active'));
         entry.target.classList.add('active');
 
-        const role = roles.find(r => r.title === entry.target.dataset.role);
-        if (!role) return;
+        const mapId = entry.target.dataset.map;
+        if (!mapId) return;
 
-        markers.forEach(m => map.removeLayer(m));
-        lines.forEach(l => map.removeLayer(l));
-        markers = [];
-        lines = [];
-
-        const coords = role.locations.map(l => [l.lat, l.lng]);
-
-        if (coords.length > 1) {
-            map.fitBounds(L.latLngBounds(coords), {
-                padding: [80, 80],
-                maxZoom: 7
-            });
-        } else {
-            map.flyTo(coords[0], 10, { duration: 2 });
-        }
-
-        role.locations.forEach(loc => {
-            const m = L.marker([loc.lat, loc.lng], { icon: greenDot }).addTo(map);
-            m.bindTooltip(loc.label, { direction: 'top', permanent: false });
-            markers.push(m);
+        document.querySelectorAll('.map-image').forEach(img => {
+            img.classList.remove('active');
         });
 
-        for (let i = 0; i < coords.length - 1; i++) {
-            const arc = createArc(coords[i], coords[i + 1]);
-            const line = L.polyline(arc, {
-                color: '#00ff66',
-                weight: 1,
-                opacity: 0.35,
-                dashArray: '3,6'
-            }).addTo(map);
-            lines.push(line);
-        }
+        const active = document.getElementById(mapId);
+        if (active) active.classList.add('active');
     });
 }, { threshold: 0.6 });
 
-sections.forEach(section => observer.observe(section));
-
+sections.forEach(s => observer.observe(s));
 </script>
 
 </body>
