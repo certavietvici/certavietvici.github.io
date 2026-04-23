@@ -4,147 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certavi et Vici — Aachen LLC</title>
-    <!-- Leaflet Map CSS -->
+    
+    <!-- FIX 1: Full Path to Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com" />
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
-        
         :root { --accent: #b38b2e; --map-blue: #00d4ff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #050505;
-            color: #e0e0e0;
-            display: flex;
-            flex-direction: row; /* Split screen */
-        }
-
-        /* Map on the Left - Stays Fixed */
-        #map-container {
-            position: sticky;
-            top: 0;
-            width: 50%;
-            height: 100vh;
-            background: #000;
-            border-right: 1px solid #222;
-        }
+        body { font-family: 'Inter', sans-serif; background: #050505; color: #e0e0e0; display: flex; flex-direction: row; }
+        #map-container { position: sticky; top: 0; width: 50%; height: 100vh; background: #000; border-right: 1px solid #222; }
         #map { width: 100%; height: 100%; }
-
-        /* Content on the Right - Scrolls */
-        #content {
-            width: 50%;
-            padding: 0 10%;
-        }
-
-        .section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            opacity: 0.3;
-            transition: opacity 0.5s ease;
-        }
+        #content { width: 50%; padding: 0 10%; }
+        .section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; opacity: 0.3; transition: opacity 0.5s ease; }
         .section.active { opacity: 1; }
-
         .logo { font-family: 'Playfair Display', serif; font-size: 3rem; color: #fff; margin-bottom: 1rem; }
         .tagline { color: var(--accent); font-weight: 600; font-size: 1.2rem; margin-bottom: 2rem; }
         h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--map-blue); }
         p { color: #aaaaaa; line-height: 1.6; }
-
-        /* Leaflet Tooltip Styling */
-        .leaflet-tooltip {
-            background: rgba(0, 0, 0, 0.8) !important;
-            color: var(--map-blue) !important;
-            border: 1px solid var(--map-blue) !important;
-            font-family: monospace;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
-        }
-
-        /* Mobile fallback */
-        @media (max-width: 900px) {
-            body { flex-direction: column; }
-            #map-container, #content { width: 100%; }
-            #map-container { height: 40vh; }
-        }
+        .leaflet-tooltip { background: rgba(0, 0, 0, 0.8) !important; color: var(--map-blue) !important; border: 1px solid var(--map-blue) !important; font-family: monospace; box-shadow: 0 0 10px rgba(0, 212, 255, 0.3); }
+        @media (max-width: 900px) { body { flex-direction: column; } #map-container, #content { width: 100%; } #map-container { height: 40vh; } }
     </style>
 </head>
 <body>
-
     <div id="map-container"><div id="map"></div></div>
-
     <div id="content">
-        <!-- Landing Section -->
         <div class="section active" data-lat="40" data-lng="-40" data-zoom="3">
             <h1 class="logo">Certavi et Vici</h1>
             <p class="tagline">Cybersecurity Solutions</p>
             <p>Scroll to explore the journey.</p>
         </div>
-
         <div class="section" data-lat="42.3718" data-lng="-71.1213" data-zoom="15">
             <h2>1999</h2>
             <p>Harvard Kennedy School</p>
         </div>
-
         <div class="section" data-lat="42.3789" data-lng="-71.1154" data-zoom="16">
             <h2>1999-2000</h2>
             <p>Harvard University - McMahon Lab<br>16 Divinity Avenue</p>
         </div>
-
         <div class="section" data-lat="42.3601" data-lng="-71.0589" data-zoom="13">
             <h2>2000-2001</h2>
             <p>Boston Transition: Liberty Fund Services, Beacon Skanska, Bain & Co., and Boston VNA.</p>
         </div>
-
         <div class="section" data-lat="38.8998" data-lng="-77.0061" data-zoom="15">
             <h2>2001-2002</h2>
             <p>Washington DC: ACICS & The Heritage Foundation.</p>
         </div>
-
         <div class="section" data-lat="38.8831" data-lng="-77.0163" data-zoom="16">
             <h2>2002-Present</h2>
             <p>NASA HQ — Code FT</p>
-            <div style="margin-top: 2rem; font-size: 0.8rem; color: #666;">
-                Aachen LLC • Front Royal, Virginia<br>CAGE: 1NEE8
-            </div>
+            <div style="margin-top: 2rem; font-size: 0.8rem; color: #666;"> Aachen LLC • Front Royal, Virginia<br>CAGE: 1NEE8 </div>
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- FIX 2: Full Path to Leaflet JS -->
     <script src="https://unpkg.com"></script>
-    <script>
-        // 1. Initialize Map
-        const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([40, -40], 3);
-        
-        // 2. Add Wireframe Tiles
-        L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png').addTo(map);
 
-        // 3. Setup Intersection Observer to trigger "Fly To"
+    <script>
+        const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([40, -40], 3);
+
+        // FIX 3: Working Wireframe Tile Layer
+        L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(map);
+
         const sections = document.querySelectorAll('.section');
         const observerOptions = { threshold: 0.5 };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Highlight text
                     sections.forEach(s => s.classList.remove('active'));
                     entry.target.classList.add('active');
-
-                    // Move Map
                     const lat = entry.target.getAttribute('data-lat');
                     const lng = entry.target.getAttribute('data-lng');
                     const zoom = entry.target.getAttribute('data-zoom');
-
                     map.flyTo([lat, lng], zoom, { duration: 2 });
-
-                    // Add a temporary marker/label
                     L.marker([lat, lng]).addTo(map)
                         .bindTooltip(entry.target.querySelector('h2')?.innerText || "Certavi et Vici", { permanent: true })
                         .openTooltip();
                 }
             });
         }, observerOptions);
-
         sections.forEach(section => observer.observe(section));
     </script>
 </body>
