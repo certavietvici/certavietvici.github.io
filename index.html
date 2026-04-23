@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certavi et Vici — Aachen LLC</title>
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
-        :root { --accent: #b38b2e; --map-blue: #00d4ff; }
+        @import url('https://googleapis.com');
+        :root { --accent: #b38b2e; --map-white: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #050505; color: #e0e0e0; display: flex; flex-direction: row; }
         
@@ -21,26 +21,26 @@
 
         .logo { font-family: 'Playfair Display', serif; font-size: 3rem; color: #fff; margin-bottom: 1rem; }
         .tagline { color: var(--accent); font-weight: 600; font-size: 1.2rem; margin-bottom: 2rem; }
-        h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--map-blue); }
+        h2 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--map-white); }
         p { color: #aaaaaa; line-height: 1.6; }
 
         /* Glow effects for wireframe look */
         .leaflet-tooltip { 
-            background: rgba(0, 0, 0, 0.8) !important; 
-            color: var(--map-blue) !important; 
-            border: 1px solid var(--map-blue) !important; 
+            background: rgba(0, 0, 0, 0.85) !important; 
+            color: #fff !important; 
+            border: 1px solid #444 !important; 
             font-family: monospace; 
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4); 
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); 
         }
         
-        .leaflet-marker-icon { filter: drop-shadow(0 0 5px var(--map-blue)); }
+        .leaflet-marker-icon { filter: brightness(0) invert(1); } /* Makes marker white */
 
-        /* Animated Career Path Line */
+        /* White Animated Career Path Line */
         .career-path-line {
             stroke-dasharray: 2000;
             stroke-dashoffset: 2000;
             animation: draw 8s linear forwards;
-            filter: drop-shadow(0 0 5px var(--map-blue));
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
         }
         @keyframes draw { to { stroke-dashoffset: 0; } }
 
@@ -55,23 +55,23 @@
             <p class="tagline">Cybersecurity Solutions</p>
             <p>Scroll to explore the journey.</p>
         </div>
-        <div class="section" data-lat="42.3718" data-lng="-71.1213" data-zoom="15">
+        <div class="section" data-lat="42.3718" data-lng="-71.1213" data-zoom="15" data-place="Harvard Kennedy School">
             <h2>1999</h2>
             <p>Harvard Kennedy School</p>
         </div>
-        <div class="section" data-lat="42.3789" data-lng="-71.1154" data-zoom="16">
+        <div class="section" data-lat="42.3789" data-lng="-71.1154" data-zoom="16" data-place="McMahon Lab">
             <h2>1999-2000</h2>
             <p>Harvard University - McMahon Lab<br>16 Divinity Avenue</p>
         </div>
-        <div class="section" data-lat="42.3601" data-lng="-71.0589" data-zoom="13">
+        <div class="section" data-lat="42.3601" data-lng="-71.0589" data-zoom="13" data-place="Boston Transition">
             <h2>2000-2001</h2>
             <p>Boston Transition: Liberty Fund Services, Beacon Skanska, Bain & Co., and Boston VNA.</p>
         </div>
-        <div class="section" data-lat="38.8998" data-lng="-77.0061" data-zoom="15">
+        <div class="section" data-lat="38.8998" data-lng="-77.0061" data-zoom="15" data-place="Capitol Hill">
             <h2>2001-2002</h2>
             <p>Washington DC: ACICS & The Heritage Foundation.</p>
         </div>
-        <div class="section" data-lat="38.8831" data-lng="-77.0163" data-zoom="16">
+        <div class="section" data-lat="38.8831" data-lng="-77.0163" data-zoom="16" data-place="NASA HQ">
             <h2>2002-Present</h2>
             <p>NASA HQ — Code FT</p>
             <div style="margin-top: 2rem; font-size: 0.8rem; color: #666;"> Aachen LLC • Front Royal, Virginia<br>CAGE: 1NEE8 </div>
@@ -79,11 +79,11 @@
     </div>
 
     <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com"></script>
     <script>
         const map = L.map('map', { zoomControl: false, attributionControl: false }).setView([40, -40], 3);
 
-        // DARK WIREFRAME TILES (No Labels)
+        // DARK MATTER TILES (Includes State/Country Boundaries)
         L.tileLayer('https://{s}://{z}/{x}/{y}{r}.png', {
             attribution: '&copy; OpenStreetMap &copy; CARTO',
             subdomains: 'abcd',
@@ -93,19 +93,18 @@
         const sections = document.querySelectorAll('.section');
         const observerOptions = { threshold: 0.5 };
         let marker;
-        let pathLine;
         
-        // Collect all coordinates to draw the path
+        // Build path coordinates
         const coords = Array.from(sections).map(s => [
             parseFloat(s.getAttribute('data-lat')),
             parseFloat(s.getAttribute('data-lng'))
         ]);
 
-        // Draw the full animated career path
-        pathLine = L.polyline(coords, {
-            color: '#00d4ff',
+        // Draw the white animated path
+        L.polyline(coords, {
+            color: '#ffffff',
             weight: 2,
-            opacity: 0.6,
+            opacity: 0.8,
             className: 'career-path-line'
         }).addTo(map);
 
@@ -118,16 +117,18 @@
                     const lat = parseFloat(entry.target.getAttribute('data-lat'));
                     const lng = parseFloat(entry.target.getAttribute('data-lng'));
                     const zoom = parseInt(entry.target.getAttribute('data-zoom'));
+                    const place = entry.target.getAttribute('data-place') || "Certavi et Vici";
 
-                    map.flyTo([lat, lng], zoom, { duration: 2, easeLinearity: 0.25 });
+                    map.flyTo([lat, lng], zoom, { duration: 2.5 });
 
                     if (marker) { map.removeLayer(marker); }
                     
                     marker = L.marker([lat, lng]).addTo(map)
-                        .bindTooltip(
-                            entry.target.querySelector('h2')?.innerText || "Certavi et Vici", 
-                            { permanent: true, direction: 'top', offset: [0, -10] }
-                        ).openTooltip();
+                        .bindTooltip(place, { 
+                            permanent: true, 
+                            direction: 'top', 
+                            offset: [0, -10] 
+                        }).openTooltip();
                 }
             });
         }, observerOptions);
