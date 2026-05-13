@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/favicon.png">
-    <title>M4 - M9 Training & Quaification | Aachen LLC</title>
+    <title>M4 - M9 Training & Qualification | Aachen LLC</title>
     <link href="css/theme.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <style>
@@ -14,9 +14,10 @@
         .section { margin-bottom: 28px; }
         .section h2 { font-size: 14px; border-bottom: 1px solid #ddd; padding-bottom: 6px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.6px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+        @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } .container { padding: 24px 16px 80px 16px; } }
+        @media (max-width: 480px) { .container { padding: 16px 12px 80px 12px; } .footer { flex-direction: column; gap: 8px; font-size: 11px; } }
         .back-link { display: inline-block; margin-bottom: 20px; color: #111; text-decoration: underline; font-size: 14px; }
-        .footer { position: fixed; bottom: 0; left: 0; right: 0; background: #000; color: #fff; font-size: 12px; padding: 10px 20px; display: flex; justify-content: space-between; }
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; background: #000; color: #fff; font-size: 12px; padding: 10px 20px; display: flex; justify-content: space-between; flex-wrap: wrap; word-break: break-word; }
         .footer a { color: #fff; text-decoration: none; }
     </style>
 </head>
@@ -45,8 +46,7 @@
                 </ul>
             </div>
         </div>
-
-    <!-- SUBJECT AREAS (Optional additions to fill space) -->
+    </div>
 
     <!-- FOOTER -->
     <div class="footer">
