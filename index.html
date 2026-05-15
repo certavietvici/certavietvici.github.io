@@ -18,7 +18,20 @@ body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff
 .actions { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; } 
 .actions a { border: 1px solid #111; padding: 8px 12px; text-decoration: none; color: #111; font-size: 14px; } 
 
-/* FIXED: Target the h1 inside top-block to remove default browser spacing */
+/* NEW: Classification style full-bleed announcement banner */
+.announcement-banner {
+    background: #000000;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    letter-spacing: 0.8px;
+    padding: 12px 24px;
+    width: 100%;
+    box-sizing: border-box;
+    text-transform: uppercase; /* Ensures uniform government block-text look */
+}
+
 .top-block h1 {
     margin: 0;
 }
@@ -40,6 +53,12 @@ body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff
 </style> 
 </head> 
 <body> 
+
+<!-- UPDATED: Full width banner added outside the main container layout -->
+<div class="announcement-banner">
+    READY for a Subcontract - Need a Prime to Sponsor My Non-Possessing FCL
+</div>
+
 <div class="container"> 
 <!-- ENTITY / LEGAL --> 
 <div class="top-block"> 
@@ -48,9 +67,7 @@ body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff
 </div> 
 <div class="contact"> 
 29 Edgewood St, Front Royal, VA 22630 | +1 (571) 551-9967 | <a href="mailto:info@certavietvici.com" style="color: black; text-decoration: underline;" onmouseover="this.style.color='black'" onmouseout="this.style.color='black'">info@certavietvici.com</a> 
-</div>
-<br>
-<div class="meta"> READY for a Subcontract - Need a Prime to Sponsor My Non-Possessing FCL </div> 
+</div> 
 <br> 
 <div class="meta"> UEI: Q3H3RKHNJ289 | CAGE: 1NEE8 | Virginia Entity ID: 11028260 | NAICS: 541512, 541519, 541611, 561621 </div> 
 <div class="meta"> Azure Government | DoW IL5 / FedRAMP High | CMMC Ready | <a href="https://microsoftonline.us" style="color: black; text-decoration: underline;">Microsoft M365 GCC High Tenant - CUI Enclave</a> | <a href="https://nsaarc.net" style="color: black; text-decoration: underline;">NSA ARC Registered</a> </div> 
