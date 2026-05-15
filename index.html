@@ -14,11 +14,19 @@
 <link href="css/theme.css" rel="stylesheet"> 
 <link href="css/style.css" rel="stylesheet"> 
 <style> 
-body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff; color: #111; line-height: 1.5; } 
+body { 
+    margin: 0; 
+    font-family: Arial, Helvetica, sans-serif; 
+    background: #ffffff; 
+    color: #111; 
+    line-height: 1.5; 
+    /* FIXED: Pushes body content down so it does not get covered by the fixed banner */
+    padding-top: 46px; 
+} 
 .actions { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; } 
 .actions a { border: 1px solid #111; padding: 8px 12px; text-decoration: none; color: #111; font-size: 14px; } 
 
-/* NEW: Classification style full-bleed announcement banner */
+/* FIXED: Sticky full-bleed classification announcement banner */
 .announcement-banner {
     background: #000000;
     color: #ffffff;
@@ -27,9 +35,17 @@ body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff
     font-size: 15px;
     letter-spacing: 0.8px;
     padding: 12px 24px;
+    
+    /* Lock to the top of the viewport */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999; /* Ensures it stays stacked above all other content */
+    
     width: 100%;
     box-sizing: border-box;
-    text-transform: uppercase; /* Ensures uniform government block-text look */
+    text-transform: uppercase; 
 }
 
 .top-block h1 {
@@ -41,7 +57,7 @@ body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff
 .top-block { border-bottom: 1px solid #111; padding-bottom: 10px; margin-bottom: 10px; } 
 .title { font-size: 28px; font-weight: bold; margin-bottom: 6px; } 
 .bluf { border-bottom: 2px solid #111; padding-bottom: 20px; margin-bottom: 30px; } 
-.bluf h1 { font-size: 28px; margin-bottom: 10px; } 
+.bluf h1 { font-size: 24px; margin-bottom: 10px; } 
 .meta { font-size: 1em; color: #333; word-break: break-word; } 
 .section { margin-bottom: 28px; } 
 .section h2 { font-size: 14px; border-bottom: 1px solid #ddd; padding-bottom: 6px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.6px; } 
@@ -54,7 +70,7 @@ body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff
 </head> 
 <body> 
 
-<!-- UPDATED: Full width banner added outside the main container layout -->
+<!-- Fixed top classification banner -->
 <div class="announcement-banner">
     READY for a Subcontract - Need a Prime to Sponsor My Non-Possessing FCL
 </div>
@@ -73,6 +89,7 @@ body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #ffffff
 <div class="meta"> Azure Government | DoW IL5 / FedRAMP High | CMMC Ready | <a href="https://microsoftonline.us" style="color: black; text-decoration: underline;">Microsoft M365 GCC High Tenant - CUI Enclave</a> | <a href="https://nsaarc.net" style="color: black; text-decoration: underline;">NSA ARC Registered</a> </div> 
 <div class="meta"> Small Business - Single-Member LLC | Sole SMO/KMP, <a href="fso.html" style="color: black; text-decoration: underline;">FSO</a>, <a href="itpso.html" style="color: black; text-decoration: underline;">ITPSO</a> | DoW Contractor since FEB 2011 </div> 
 </div>
+
 
     <!-- BLUF -->
     <div class="bluf">
