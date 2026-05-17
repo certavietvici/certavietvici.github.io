@@ -36,7 +36,7 @@ body {
     color: #111;
     font-size: 14px;
 }
-/* FIXED: Three-column layout matching standard operation enclaves */
+/* Narrow black classification-style announcement banner with balanced three-column layout */
 .announcement-banner {
     background: #000000;
     color: #ffffff;
@@ -353,8 +353,11 @@ DC | NYC | Boston | Orlando | Bavaria | Baden-Württemberg | Rhineland Pfalz | U
 function updateBannerClock() {
     const now = new Date();
     
-    // Left Element: Date format (YYYY-MM-DD)
-    const dateString = now.toLocaleDateString('sv-SE'); 
+    // Left Element: Date formatted as "DD MMM YYYY" (e.g., 17 MAY 2026)
+    const day = now.getDate();
+    const month = now.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+    const year = now.getFullYear();
+    const dateString = `${day} ${month} ${year}`;
     
     // Right Element: Time format (24-hour style)
     const timeOptions = {
