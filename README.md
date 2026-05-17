@@ -18,4 +18,4 @@ This page was relatively easy to configure for use with my custom domain, requir
 
 I am not selling anything on this site nor am I driving commercial traffic here, but rather, as has been stated, it serves as a résumé/consultant POC page that provides ready access to certain bona fides I have used for reference when completing formns requiring my UEI, CAGE, DUNS, and other information.
 
-Though I am not driving traffic to this site, I did register it with Google, included a registration file, and a sitemap for completeness desite the lack of breadth or depth.
+Though I am not driving traffic to this site, I did register it with Google, included a registration file, and a sitemap for completeness despite the lack of breadth or depth.
