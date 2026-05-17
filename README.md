@@ -10,4 +10,10 @@ Certavi et vici is Latin for "I have fought and conquered" and is the motto of t
 
 Certification certificates are presented in .png format as their original .pdf files loaded slowly by comparison. The .png files are all screenshot captures of the original .pdf files.
 
-A .pdf version of the main page is made available to download which is a 'fit to one page' print to .pdf. 
+A .pdf version of the main page is made available to download which is a 'fit to one page' print to .pdf as is a vcf formatted contact file and there is a link to my LinkedIn profile.
+
+Part résumé, part single-member LLC, 'pass-through entity for tax purposes' business page to direct prime contractors and Government employees to for whenever a registration requests a website.
+
+This page was relatively easy to configure for use with my custom domain, requiring I create certain DNS records.
+
+I am not selling anything on this site nor am I driving commercial traffic here, but rather, as has been stated, it serves as a résumé/consultant POC page that provides ready access to certain bona fides I have used for reference when completing formns requiring my UEI, CAGE, DUNS, and other information.
