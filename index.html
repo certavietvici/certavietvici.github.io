@@ -1,246 +1,360 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-<meta charset="utf-8"> 
-<meta name="viewport" content="width=device-width, initial-scale=1"> 
-<link rel="icon" type="image/png" href="/favicon.png"> 
-<title>Aachen LLC</title> 
-<meta property="og:title" content="Aachen LLC"> 
-<meta property="og:description" content="Subcontracting and teaming support for DoW and IC programs. Architecture, cybersecurity, and infrastructure expertise."> 
-<meta property="og:image" content="https://certavietvici.com"> 
-<meta property="og:url" content="https://certavietvici.com"> 
-<meta property="og:type" content="website"> 
-<!-- Optional external CSS (keep if you use them) --> 
-<link href="css/theme.css" rel="stylesheet"> 
-<link href="css/style.css" rel="stylesheet"> 
-<style> 
-body { 
-    margin: 0; 
-    font-family: Arial, Helvetica, sans-serif; 
-    background: #ffffff; 
-    color: #111; 
-    line-height: 1.5; 
-    /* FIXED: Pushes body content down so it does not get covered by the fixed top banner */ 
-    padding-top: 34px; 
-} 
-.actions { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; } 
-.actions a { border: 1px solid #111; padding: 8px 12px; text-decoration: none; color: #111; font-size: 14px; } 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="/favicon.png">
+<title>Aachen LLC</title>
+<meta property="og:title" content="Aachen LLC">
+<meta property="og:description" content="Subcontracting and teaming support for DoW and IC programs. Architecture, cybersecurity, and infrastructure expertise.">
+<meta property="og:image" content="https://certavietvici.com">
+<meta property="og:url" content="https://certavietvici.com">
+<meta property="og:type" content="website">
+<!-- Optional external CSS (keep if you use them) -->
+<link href="css/theme.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+    color: #111;
+    line-height: 1.5;
+    /* FIXED: Pushes body content down so it does not get covered by the fixed top banner */
+    padding-top: 38px;
+}
+.actions {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.actions a {
+    border: 1px solid #111;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #111;
+    font-size: 14px;
+}
+/* FIXED: Narrow black classification-style announcement banner with running clock layout */
+.announcement-banner {
+    background: #000000;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+    padding: 8px 24px;
+    /* Lock to the top of the viewport */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999; /* Ensures it stays stacked above all other content */
+    width: 100%;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.banner-clock {
+    font-variant-numeric: tabular-nums; /* Prevents text shifting as numbers change */
+    font-size: 12px;
+}
+.top-block h1 {
+    margin: 0;
+}
+.contact {
+    margin-top: 4px;
+    font-size: 15px;
+    color: #111;
+    word-break: break-word;
+}
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 24px 80px 24px;
+}
+.top-block {
+    border-bottom: 1px solid #111;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+.bluf {
+    border-bottom: 2px solid #111;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+.bluf h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.meta {
+    font-size: 1em;
+    color: #333;
+    word-break: break-word;
+}
+.section {
+    margin-bottom: 28px;
+}
+.section h2 {
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+@media (max-width: 800px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .container {
+        padding: 24px 16px 80px 16px;
+    }
+    .bluf h1 {
+        font-size: 24px;
+    }
+    .title {
+        font-size: 20px;
+    }
+}
+@media (max-width: 580px) {
+    .announcement-banner {
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+    }
+    body {
+        padding-top: 54px;
+    }
+}
+@media (max-width: 480px) {
+    .container {
+        padding: 16px 12px 80px 12px;
+    }
+    .actions {
+        flex-direction: column;
+    }
+    .actions a {
+        width: 100%;
+        text-align: center;
+    }
+    .footer {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 11px;
+    }
+}
+/* FIXED: Black footer layout matching the top banner styling profile */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #000000;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    word-break: break-word;
+    z-index: 9999;
+}
+/* FIXED: Keep footer hyperlinks white and underlined */
+.footer a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+</style>
+</head>
+<body>
 
-/* FIXED: Narrow black classification-style announcement banner */ 
-.announcement-banner { 
-    background: #000000; 
-    color: #ffffff; 
-    text-align: center; 
-    font-weight: bold; 
-    font-size: 15px; 
-    letter-spacing: 0.8px; 
-    padding: 6px 24px; 
-    /* Lock to the top of the viewport */ 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    right: 0; 
-    z-index: 9999; /* Ensures it stays stacked above all other content */ 
-    width: 100%; 
-    box-sizing: border-box; 
-    text-transform: uppercase; 
-} 
+<!-- Fixed top classification banner with running clock container -->
+<div class="announcement-banner">
+    <div>Ready for Subcontracts // Sponsor My Non-Possessing FCL</div>
+    <div class="banner-clock" id="live-clock">LOADING...</div>
+</div>
 
-.top-block h1 { margin: 0; } 
-.contact { margin-top: 4px; font-size: 15px; color: #111; word-break: break-word; } 
-.container { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px 24px; } 
-.top-block { border-bottom: 1px solid #111; padding-bottom: 10px; margin-bottom: 10px; } 
-.title { font-size: 28px; font-weight: bold; margin-bottom: 6px; } 
-.bluf { border-bottom: 2px solid #111; padding-bottom: 20px; margin-bottom: 30px; } 
-.bluf h1 { font-size: 24px; margin-bottom: 10px; } 
-.meta { font-size: 1em; color: #333; word-break: break-word; } 
-.section { margin-bottom: 28px; } 
-.section h2 { font-size: 14px; border-bottom: 1px solid #ddd; padding-bottom: 6px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.6px; } 
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } 
+<div class="container">
+<!-- ENTITY / LEGAL -->
+<div class="top-block">
+<div style="display: flex; align-items: center; gap: 10px;">
+<h1>AACHEN LLC</h1>
+</div>
+<div class="contact">
+29 Edgewood St, Front Royal, VA 22630 | +1 (571) 551-9967 | <a href="mailto:info@certavietvici.com" style="color: black; text-decoration: underline;" onmouseover="this.style.color='black'" onmouseout="this.style.color='black'">info@certavietvici.com</a>
+</div>
+<br>
+<!-- PARATUS -->
+<div class="section">
+<h2>In omnia paratus</h2>
+<div class="grid">
+<ul>
+<li>UEI: Q3H3RKHNJ289</li>
+<li>Virginia Entity ID: 11028260</li>
+<li>Microsoft M365 GCC High Tenant - CUI Enclave</li>
+<li><a href="fso.html" style="color: black; text-decoration: underline;">FSO Curriculum Certificates ✓</a></li>
+<li>Self-Provisioned Azure Government IL5 M365 GCC High</li>
+<li>Small Business - Single-Member LLC</li>
+</ul>
+<ul>
+<li>CAGE: 1NEE8 | D-U-N-S #:11-747-9800</li>
+<li>NAICS: 541512, 541519, 541611, 561621</li>
+<li>NSA ARC Registered</li>
+<li><a href="itpso.html" style="color: black; text-decoration: underline;">ITPSO Curriculum Certificates ✓</a></li>
+<li>CMMC Ready</li>
+<li>Owner Architect/Engineer/SME/SETA/Lead</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- CORE -->
+<div class="section">
+<h2>Core Competencies</h2>
+<div class="grid">
+<ul>
+<li>CMMC compliance for M365 GCC/GCC High</li>
+<li>CCMD/MAJCOM A&E support</li>
+<li>DoW/IC enclave environments</li>
+<li>Large-scale operations & sustainment</li>
+<li>Virtual Desktop Infrastructure VDI</li>
+<li>Enterprise virtualization VMware/VCF</li>
+<li>Data center operations</li>
+</ul>
+<ul>
+<li>RMF compliance, STIG/SRG/system hardening</li>
+<li>Enterprise storage SAN/NAS</li>
+<li>Cybersecurity operations & governance</li>
+<li>IC/ISR platform support (US BICES, manned airborne ISR)</li>
+<li>Application virtualization</li>
+<li>Hyperconverged infrastructure</li>
+<li>Austere/edge operations</li>
+</ul>
+</div>
+</div>
+<!-- BLUF -->
+<div class="bluf">
+<h1>Brian Joseph Byrne - Principal</h1>
+<div class="meta">
+Active TS/SCI | Tier 5 | SSBI | DoW Contractor from FEB 2011-Present
+</div>
+<div class="meta">
+30 DoW Cyber Workforce Framework (DCWF) 8140.03 Roles (19 pending) | 8570.01 IAT II, IAM I; IAT III, IAM II, IASAE II (pending)
+</div>
+<!-- CERTS -->
+<div class="section">
+<h2>Certifications</h2>
+<p>
+<a href="cissp-pending.png" style="color: black; text-decoration: underline;">ISC2 CISSP (endorsement pending)</a><br>
+<a href="vcp-dcv.png" style="color: black; text-decoration: underline;">VMware VCP-DCV</a><br>
+<a href="togaf10eap.png" style="color: black; text-decoration: underline;">TOGAF 10 Enterprise Architecture Practitioner</a><br>
+<a href="mcitp.png" style="color: black; text-decoration: underline;">Microsoft MCSA/MCITP</a><br>
+<a href="project+ce.png" style="color: black; text-decoration: underline;">CompTIA Project+ ce</a><br>
+<a href="isc2_cc.png" style="color: black; text-decoration: underline;">ISC2 CC</a><br>
+<a href="sec+ce.png" style="color: black; text-decoration: underline;">CompTIA Sec+ ce</a><br><br>
+</p>
+</div>
+<!-- EXPERIENCE -->
+<div class="section">
+<h2>Operational Experience</h2>
+<p><strong>DoW / IC / Coalition Environments</strong></p>
+<ul>
+<li>CCMD-Level: CENTCOM, EUCOM, AFRICOM infrastructure support</li>
+<li>HQDA USAITA (now DISA JSP) Enterprise Architecture Team (Pentagon)</li>
+<li>US BICES - MPCO - MPE / IC-aligned A&E and P&R SETA support</li>
+<li>TF ODIN-E / INSCOM / PM ARES / PM SAI aligned manned ISR programs: SATURN ARCH, MARSS, VaDER, E-MARSS</li>
+<li>Foreign Military Sales (FMS) - AFLCMC - DoS: Integration, RMF/STIG/Audit, classroom instruction (AD, VMware, VDI/AppVols, VCF)</li>
+<li>DoW Lab - AFLCMC Integration Test Facility (ITF) on the DREN - BICES Coalition Integration Lab (CIL) - Saturn Arch Systems Integration Lab (SIL)</li>
+</ul>
+<p><strong>OCONUS</strong></p>
+<ul>
+<li>Afghanistan — PEO EIS PMP2E & 335th SC/T SWA-V implementation & TF ODIN (2011–2012, 90-day rotations 2014, 60-day rotations 2018–2019) ← CRC/IRDO at Benning, Atterbury, and Bliss</li>
+<li>West Africa — USAFRICOM Ebola response (Operation United Assistance, 2014-2015)</li>
+<li>Germany — USEUCOM Virtual Infrastructure & Air Force Storage & Virtualization CoE (2015–2018, 2022–2025) ← ECOPS/TESA</li>
+<li>Qatar — F-15QA Cyber Team (2021–2022, 60-day turn & burns)</li>
+</ul>
+<p><strong>Federal / Non-profit / Academia</strong></p>
+<ul>
+<li>Harvard University Dept. of Mol. & Cel. Biol. McMahon Lab manager: NIH/DAMD</li>
+<li>The Heritage Foundation, systems engineer</li>
+<li>Wolf Trap Foundation for the Performing Arts, systems</li>
+<li>NASA Code FT, NASA Engineering Training (now APPEL), assistant to the PM</li>
+</ul>
+</div>
+<div class="meta">
+DoW OCONUS Experience: 9+ Yrs
+</div>
+<div class="meta">
+US Citizen | EU Dual Citizen (Republic of Ireland) | Ready to Live & Work Visa Free in 32 Countries ← SEAD 4
+</div>
+<div class="meta">
+DC | NYC | Boston | Orlando | Bavaria | Baden-Württemberg | Rhineland Pfalz | UAE | QATAR | KUWAIT</div>
+<br>
+<!-- DOWNLOADS -->
+<div class="section actions">
+<a href="/AachenLLC.pdf" download>PDF</a>
+<a href="/aachen.vcf" download>Add Contact</a>
+<a href="https://www.linkedin.com/in/certavietvici/" target="_blank">LinkedIn</a>
+</div>
+</div>
+<!-- ADDITIONAL -->
+<div class="section">
+<h2>Additional Qualifications</h2>
+<p>
+<a href="rso.png" style="color: black; text-decoration: underline;">Certified Range Safety Officer</a> | <a href="m4m9.html" style="color: black; text-decoration: underline;">M4 / M9 Qualification</a> | <a href="jagdschein.html" style="color: black; text-decoration: underline;">German Hunting License (Jagdschein)</a>
+</p>
+<p>
+<a href="EASA_Drone_Certificate.png" style="color: black; text-decoration: underline;">European Union Aviation Safety Agency (EASA) A1/A3 Drone Certificate</a>
+</p>
+</div>
+</div>
 
-@media (max-width: 800px) { 
-    .grid { grid-template-columns: 1fr; } 
-    .container { padding: 24px 16px 80px 16px; } 
-    .bluf h1 { font-size: 24px; } 
-    .title { font-size: 20px; } 
-} 
+<!-- FOOTER -->
+<div class="footer">
+<div>Aachen LLC | CAGE: 1NEE8 | UEI: Q3H3RKHNJ289</div>
+<div>
+29 Edgewood St, Front Royal, VA 22630 | +1 (571) 551-9967 | <a href="mailto:info@certavietvici.com">info@certavietvici.com</a>
+</div>
+</div>
 
-@media (max-width: 480px) { 
-    .container { padding: 16px 12px 80px 12px; } 
-    .actions { flex-direction: column; } 
-    .actions a { width: 100%; text-align: center; } 
-    .footer { flex-direction: column; gap: 8px; font-size: 11px; } 
-} 
-
-/* FIXED: Black footer layout matching the top banner styling profile */ 
-.footer { 
-    position: fixed; 
-    bottom: 0; 
-    left: 0; 
-    right: 0; 
-    background: #000000; 
-    color: #ffffff; 
-    font-size: 12px; 
-    padding: 10px 20px; 
-    display: flex; 
-    justify-content: space-between; 
-    flex-wrap: wrap; 
-    word-break: break-word; 
-    z-index: 9999; 
-} 
-
-/* FIXED: Keep footer hyperlinks white and underlined */ 
-.footer a { 
-    color: #ffffff; 
-    text-decoration: underline; 
-} 
-</style> 
-</head> 
-<body> 
-
-<!-- Fixed top classification banner --> 
-<div class="announcement-banner"> 
-    Ready for Subcontracts // Sponsor My Non-Possessing FCL 
-</div> 
-
-<div class="container"> 
-<!-- ENTITY / LEGAL --> 
-<div class="top-block"> 
-    <div style="display: flex; align-items: center; gap: 10px;"> 
-        <h1>AACHEN LLC</h1> 
-    </div> 
-    <div class="contact"> 
-        29 Edgewood St, Front Royal, VA 22630 | +1 (571) 551-9967 | <a href="mailto:info@certavietvici.com" style="color: black; text-decoration: underline;" onmouseover="this.style.color='black'" onmouseout="this.style.color='black'">info@certavietvici.com</a> 
-    </div> 
-    <br> 
-    <!-- PARATUS --> 
-    <div class="section"> 
-        <h2>In omnia paratus</h2> 
-        <div class="grid"> 
-            <ul> 
-                <li>UEI: Q3H3RKHNJ289</li> 
-                <li>Virginia Entity ID: 11028260</li> 
-                <li>Microsoft M365 GCC High Tenant - CUI Enclave</li> 
-                <li><a href="fso.html" style="color: black; text-decoration: underline;">FSO Curriculum Certificates ✓</a></li> 
-                <li>Self-Provisioned Azure Government IL5 M365 GCC High</li> 
-                <li>Small Business - Single-Member LLC</li> 
-            </ul> 
-            <ul> 
-                <li>CAGE: 1NEE8 | D-U-N-S #:11-747-9800</li> 
-                <li>NAICS: 541512, 541519, 541611, 561621</li> 
-                <li>NSA ARC Registered</li> 
-                <li><a href="itpso.html" style="color: black; text-decoration: underline;">ITPSO Curriculum Certificates ✓</a></li> 
-                <li>CMMC Ready</li> 
-                <li>Owner Architect/Engineer/SME/SETA/Lead</li> 
-            </ul> 
-        </div> 
-    </div> 
-</div> 
-
-<!-- CORE --> 
-<div class="section"> 
-    <h2>Core Competencies</h2> 
-    <div class="grid"> 
-        <ul> 
-            <li>CMMC compliance for M365 GCC/GCC High</li> 
-            <li>CCMD/MAJCOM A&E support</li> 
-            <li>DoW/IC enclave environments</li> 
-            <li>Large-scale operations & sustainment</li> 
-            <li>Virtual Desktop Infrastructure VDI</li> 
-            <li>Enterprise virtualization VMware/VCF</li> 
-            <li>Data center operations</li> 
-        </ul> 
-        <ul> 
-            <li>RMF compliance, STIG/SRG/system hardening</li> 
-            <li>Enterprise storage SAN/NAS</li> 
-            <li>Cybersecurity operations & governance</li> 
-            <li>IC/ISR platform support (US BICES, manned airborne ISR)</li> 
-            <li>Application virtualization</li> 
-            <li>Hyperconverged infrastructure</li> 
-            <li>Austere/edge operations</li> 
-        </ul> 
-    </div> 
-</div> 
-
-<!-- BLUF --> 
-<div class="bluf"> 
-    <h1>Brian Joseph Byrne - Principal</h1> 
-    <div class="meta"> Active TS/SCI | Tier 5 | SSBI | DoW Contractor from FEB 2011-Present </div> 
-    <div class="meta"> 30 DoW Cyber Workforce Framework (DCWF) 8140.03 Roles (19 pending) | 8570.01 IAT II, IAM I; IAT III, IAM II, IASAE II (pending) </div> 
+<!-- LIVE BANNER CLOCK SCRIPT -->
+<script>
+function updateBannerClock() {
+    const now = new Date();
     
-    <!-- CERTS --> 
-    <div class="section"> 
-        <h2>Certifications</h2> 
-        <p> 
-            <a href="cissp-pending.png" style="color: black; text-decoration: underline;">ISC2 CISSP (endorsement pending)</a><br> 
-            <a href="vcp-dcv.png" style="color: black; text-decoration: underline;">VMware VCP-DCV</a><br> 
-            <a href="togaf10eap.png" style="color: black; text-decoration: underline;">TOGAF 10 Enterprise Architecture Practitioner</a><br> 
-            <a href="mcitp.png" style="color: black; text-decoration: underline;">Microsoft MCSA/MCITP</a><br> 
-            <a href="project+ce.png" style="color: black; text-decoration: underline;">CompTIA Project+ ce</a><br> 
-            <a href="isc2_cc.png" style="color: black; text-decoration: underline;">ISC2 CC</a><br> 
-            <a href="sec+ce.png" style="color: black; text-decoration: underline;">CompTIA Sec+ ce</a><br><br> 
-        </p> 
-    </div> 
+    // ISO Format for date string: YYYY-MM-DD
+    const dateString = now.toLocaleDateString('sv-SE'); 
     
-    <!-- EXPERIENCE --> 
-    <div class="section"> 
-        <h2>Operational Experience</h2> 
-        <p><strong>DoW / IC / Coalition Environments</strong></p> 
-        <ul> 
-            <li>CCMD-Level: CENTCOM, EUCOM, AFRICOM infrastructure support</li> 
-            <li>HQDA USAITA (now DISA JSP) Enterprise Architecture Team (Pentagon)</li> 
-            <li>US BICES - MPCO - MPE / IC-aligned A&E and P&R SETA support</li> 
-            <li>TF ODIN-E / INSCOM / PM ARES / PM SAI aligned manned ISR programs: SATURN ARCH, MARSS, VaDER, E-MARSS</li> 
-            <li>Foreign Military Sales (FMS) - AFLCMC - DoS: Integration, RMF/STIG/Audit, classroom instruction (AD, VMware, VDI/AppVols, VCF)</li> 
-            <li>DoW Lab - AFLCMC Integration Test Facility (ITF) on the DREN - BICES Coalition Integration Lab (CIL) - Saturn Arch Systems Integration Lab (SIL)</li> 
-        </ul> 
-        <p><strong>OCONUS</strong></p> 
-        <ul> 
-            <li>Afghanistan — PEO EIS PMP2E & 335th SC/T SWA-V implementation & TF ODIN (2011–2012, 90-day rotations 2014, 60-day rotations 2018–2019) ← CRC/IRDO at Benning, Atterbury, and Bliss</li> 
-            <li>West Africa — USAFRICOM Ebola response (Operation United Assistance, 2014-2015)</li> 
-            <li>Germany — USEUCOM Virtual Infrastructure & Air Force Storage & Virtualization CoE (2015–2018, 2022–2025) ← ECOPS/TESA</li> 
-            <li>Qatar — F-15QA Cyber Team (2021–2022, 60-day turn & burns)</li> 
-        </ul> 
-        <p><strong>Federal / Non-profit / Academia</strong></p> 
-        <ul> 
-            <li>Harvard University Dept. of Mol. & Cel. Biol. McMahon Lab manager: NIH/DAMD</li> 
-            <li>The Heritage Foundation, systems engineer</li> 
-            <li>Wolf Trap Foundation for the Performing Arts, systems</li> 
-            <li>NASA Code FT, NASA Engineering Training (now APPEL), assistant to the PM</li> 
-        </ul> 
-    </div> 
+    // Options for 24-hour millisecond accurate precision matching typical enclaves
+    const timeOptions = {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    };
+    const timeString = now.toLocaleTimeString('en-US', timeOptions);
     
-    <div class="meta"> DoW OCONUS Experience: 9+ Yrs </div> 
-    <div class="meta"> US Citizen | EU Dual Citizen (Republic of Ireland) | Ready to Live & Work Visa Free in 32 Countries ← SEAD 4 </div> 
-    <div class="meta"> DC | NYC | Boston | Orlando | Bavaria | Baden-Württemberg | Rhineland Pfalz | UAE | QATAR | KUWAIT</div> 
-    <br> 
-    <!-- DOWNLOADS --> 
-    <div class="section actions"> 
-        <a href="/AachenLLC.pdf" download>PDF</a> 
-        <a href="/aachen.vcf" download>Add Contact</a> 
-        <a href="https://www.linkedin.com/in/certavietvici/" target="_blank">LinkedIn</a> 
-    </div> 
-</div> 
+    // Isolate timezone text string profile
+    const tzString = now.toLocaleDateString('en-US', { timeZoneName: 'short' }).split(', ')[1] || '';
 
-<!-- ADDITIONAL --> 
-<div class="section"> 
-    <h2>Additional Qualifications</h2> 
-    <p> 
-        <a href="rso.png" style="color: black; text-decoration: underline;">Certified Range Safety Officer</a> | <a href="m4m9.html" style="color: black; text-decoration: underline;">M4 / M9 Qualification</a> | <a href="jagdschein.html" style="color: black; text-decoration: underline;">German Hunting License (Jagdschein)</a> 
-    </p> 
-    <p> 
-        <a href="EASA_Drone_Certificate.png" style="color: black; text-decoration: underline;">European Union Aviation Safety Agency (EASA) A1/A3 Drone Certificate</a> 
-    </p> 
-</div> 
-</div> 
+    document.getElementById('live-clock').textContent = `${dateString} ${timeString} ${tzString}`;
+}
+// Init and loop hook
+updateBannerClock();
+setInterval(updateBannerClock, 1000);
+</script>
 
-<!-- FOOTER --> 
-<div class="footer"> 
-    <div>Aachen LLC | CAGE: 1NEE8 | UEI: Q3H3RKHNJ289</div> 
-    <div> 
-        29 Edgewood St, Front Royal, VA 22630 | +1 (571) 551-9967 | <a href="mailto:info@certavietvici.com">info@certavietvici.com</a> 
-    </div> 
-</div> 
-
-</body> 
+</body>
 </html>
