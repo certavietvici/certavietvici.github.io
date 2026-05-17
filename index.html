@@ -20,7 +20,7 @@ body {
     background: #ffffff;
     color: #111;
     line-height: 1.5;
-    /* FIXED: Pushes body content down so it does not get covered by the fixed top banner */
+    /* Pushes body content down so it does not get covered by the fixed top banner */
     padding-top: 38px;
 }
 .actions {
@@ -36,7 +36,7 @@ body {
     color: #111;
     font-size: 14px;
 }
-/* FIXED: Narrow black classification-style announcement banner with running clock layout */
+/* FIXED: Three-column layout matching standard operation enclaves */
 .announcement-banner {
     background: #000000;
     color: #ffffff;
@@ -57,9 +57,21 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-.banner-clock {
-    font-variant-numeric: tabular-nums; /* Prevents text shifting as numbers change */
+/* Ensures the left, center, and right blocks have equal width boundaries for perfect centering */
+.banner-left, .banner-right {
+    flex: 1;
+    font-variant-numeric: tabular-nums;
     font-size: 12px;
+}
+.banner-left {
+    text-align: left;
+}
+.banner-center {
+    flex: 2; /* Gives center text priority space */
+    text-align: center;
+}
+.banner-right {
+    text-align: right;
 }
 .top-block h1 {
     margin: 0;
@@ -129,14 +141,20 @@ body {
         font-size: 20px;
     }
 }
-@media (max-width: 580px) {
+@media (max-width: 650px) {
     .announcement-banner {
         flex-direction: column;
         gap: 4px;
         text-align: center;
+        padding: 6px 12px;
+    }
+    .banner-left, .banner-center, .banner-right {
+        text-align: center;
+        flex: none;
+        width: 100%;
     }
     body {
-        padding-top: 54px;
+        padding-top: 72px; /* Extra room for stacked elements on mobile devices */
     }
 }
 @media (max-width: 480px) {
@@ -156,7 +174,7 @@ body {
         font-size: 11px;
     }
 }
-/* FIXED: Black footer layout matching the top banner styling profile */
+/* Black footer layout matching the top banner styling profile */
 .footer {
     position: fixed;
     bottom: 0;
@@ -172,7 +190,7 @@ body {
     word-break: break-word;
     z-index: 9999;
 }
-/* FIXED: Keep footer hyperlinks white and underlined */
+/* Keep footer hyperlinks white and underlined */
 .footer a {
     color: #ffffff;
     text-decoration: underline;
@@ -181,10 +199,11 @@ body {
 </head>
 <body>
 
-<!-- Fixed top classification banner with running clock container -->
+<!-- Fixed top classification banner with balanced three-column layout -->
 <div class="announcement-banner">
-    <div>Ready for Subcontracts // Sponsor My Non-Possessing FCL</div>
-    <div class="banner-clock" id="live-clock">LOADING...</div>
+    <div class="banner-left" id="live-date">LOADING...</div>
+    <div class="banner-center">Ready for Subcontracts // Sponsor My Non-Possessing FCL</div>
+    <div class="banner-right" id="live-clock">LOADING...</div>
 </div>
 
 <div class="container">
@@ -306,7 +325,7 @@ DC | NYC | Boston | Orlando | Bavaria | Baden-Württemberg | Rhineland Pfalz | U
 <div class="section actions">
 <a href="/AachenLLC.pdf" download>PDF</a>
 <a href="/aachen.vcf" download>Add Contact</a>
-<a href="https://www.linkedin.com/in/certavietvici/" target="_blank">LinkedIn</a>
+<a href="https://linkedin.com" target="_blank">LinkedIn</a>
 </div>
 </div>
 <!-- ADDITIONAL -->
@@ -334,10 +353,10 @@ DC | NYC | Boston | Orlando | Bavaria | Baden-Württemberg | Rhineland Pfalz | U
 function updateBannerClock() {
     const now = new Date();
     
-    // ISO Format for date string: YYYY-MM-DD
+    // Left Element: Date format (YYYY-MM-DD)
     const dateString = now.toLocaleDateString('sv-SE'); 
     
-    // Options for 24-hour millisecond accurate precision matching typical enclaves
+    // Right Element: Time format (24-hour style)
     const timeOptions = {
         hour: '2-digit',
         minute: '2-digit',
@@ -346,10 +365,12 @@ function updateBannerClock() {
     };
     const timeString = now.toLocaleTimeString('en-US', timeOptions);
     
-    // Isolate timezone text string profile
+    // Timezone string (e.g. "EST" or "EDT")
     const tzString = now.toLocaleDateString('en-US', { timeZoneName: 'short' }).split(', ')[1] || '';
 
-    document.getElementById('live-clock').textContent = `${dateString} ${timeString} ${tzString}`;
+    // Push values into separate columns
+    document.getElementById('live-date').textContent = dateString;
+    document.getElementById('live-clock').textContent = `${timeString} ${tzString}`;
 }
 // Init and loop hook
 updateBannerClock();
